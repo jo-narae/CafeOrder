@@ -2,13 +2,16 @@ package com.narae.cafeorder.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.adapter.ExpandableListAdapter;
+import com.narae.cafeorder.adapter.HistoryListAdapter;
+import com.narae.cafeorder.history.History;
+import com.narae.cafeorder.history.HistoryItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +20,10 @@ import java.util.List;
 
 public class TwoFragment extends Fragment{
 
-    ExpandableListAdapter listAdapter;
+    HistoryListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    List<History> historyList;
+    HashMap<String, List<HistoryItem>> listChild;
 
     public TwoFragment() {
         // Required empty public constructor
@@ -40,10 +43,8 @@ public class TwoFragment extends Fragment{
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.hisExp);
 
-        // preparing list data
-        prepareListData();
-
-        listAdapter = new ExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+        prepareListDateNew();
+        listAdapter = new HistoryListAdapter(getContext(), historyList, listChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -54,43 +55,30 @@ public class TwoFragment extends Fragment{
     /*
      * Preparing the list data
      */
-    private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+    private  void prepareListDateNew(){
+        historyList = new ArrayList<>();
+        listChild = new HashMap<>();
+        historyList.add(new History("0", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "아메리카노 외 1건"));
+        historyList.add(new History("1", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "아메리카노"));
+        historyList.add(new History("2", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "카페라떼 외 1건"));
 
-        // Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
+        List<HistoryItem> one = new ArrayList<>();
 
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
+        one.add(new HistoryItem("아메리카노", "2", "3000"));
+        one.add(new HistoryItem("카페라떼", "1", "4000"));
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
+        List<HistoryItem> two = new ArrayList<>();
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
+        two.add(new HistoryItem("아메리카노", "2", "3000"));
+        two.add(new HistoryItem("카페라떼", "1", "4000"));
+        List<HistoryItem> three = new ArrayList<>();
 
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
+        three.add(new HistoryItem("아메리카노", "2", "3000"));
+        three.add(new HistoryItem("카페라떼", "1", "4000"));
+
+        listChild.put("0", one);
+        listChild.put("1", two);
+        listChild.put("2", three);
     }
 
 }

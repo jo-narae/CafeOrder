@@ -11,24 +11,26 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.history.History;
+import com.narae.cafeorder.history.HistoryItem;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class HistoryListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
+    private List<History> historyList;
     // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, List<HistoryItem>> listChild;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
+    public HistoryListAdapter(Context context, List<History> historyList,
+                              HashMap<String, List<HistoryItem>> listChild) {
         this._context = context;
-        this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+        this.historyList = historyList;
+        this.listChild = listChild;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+        return this.listChild.get(this.historyList.get(groupPosition).getId())
                 .get(childPosititon);
     }
 
@@ -41,7 +43,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        final HistoryItem child = (HistoryItem) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -49,27 +51,37 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.history_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+        TextView lblMenuName = (TextView) convertView
+                .findViewById(R.id.lblMenuName);
 
-        txtListChild.setText(childText);
+        lblMenuName.setText(child.getMenuname());
+
+        TextView lblCount = (TextView) convertView
+                .findViewById(R.id.lblCount);
+
+        lblCount.setText(child.getCount()+"건");
+
+        TextView lblPrice = (TextView) convertView
+                .findViewById(R.id.lblPrice);
+
+        lblPrice.setText(child.getPrice()+"원");
+
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .size();
+        return this.listChild.get(this.historyList.get(groupPosition).getId()).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this._listDataHeader.get(groupPosition);
+        return this.historyList.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this._listDataHeader.size();
+        return this.historyList.size();
     }
 
     @Override
@@ -80,7 +92,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        History history = (History) getGroup(groupPosition);
+        //String headerTitleSub = (String) getGroupSub(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -90,7 +103,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+        lblListHeader.setText(history.getTitle());
+
+        TextView lblListSub = (TextView) convertView
+                .findViewById(R.id.lblListHeaderSub);
+        lblListSub.setText(history.getSubtitle());
 
         return convertView;
     }
