@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.narae.cafeorder">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme">
+        <activity
+            android:name="com.narae.cafeorder.activity.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.narae.cafeorder.activity.OrderActivity"
+            android:label="@string/title_activity_order"
+            android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
+        <activity
+            android:name="com.narae.cafeorder.activity.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
+        <activity
+            android:name="com.narae.cafeorder.activity.RecipeActivity"
+            android:label="@string/title_activity_recipe"
+            android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
+        <activity
+            android:name="com.narae.cafeorder.activity.BestActivity"
+            android:label="@string/title_activity_best"
+            android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
+    </application>
+
+</manifest>
