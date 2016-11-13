@@ -4,12 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.narae.cafeorder.fragments.TwoFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/two"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+    <ExpandableListView
+        android:id="@+id/hisExp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
 </RelativeLayout>
