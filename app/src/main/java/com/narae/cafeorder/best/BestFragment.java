@@ -1,11 +1,12 @@
-package com.narae.cafeorder.activity;
+package com.narae.cafeorder.best;
 
+import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -13,21 +14,27 @@ import com.narae.cafeorder.R;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
 
-public class BestActivity extends AppCompatActivity {
+/**
+ * Created by existmaster on 2016. 11. 14..
+ */
+
+public class BestFragment extends Fragment{
 
     private View seletedItem;
-    private Toolbar toolbar;
+
+    public BestFragment() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_best);
+    }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_best, container, false);
 
         final ListView listview ;
         MenuListViewAdapter adapter;
@@ -36,17 +43,17 @@ public class BestActivity extends AppCompatActivity {
         adapter = new MenuListViewAdapter() ;
 
         // 리스트뷰 참조 및 Adapter달기
-        listview = (ListView) findViewById(R.id.lv_best);
+        listview = (ListView) view.findViewById(R.id.lv_best);
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
                 "Box", "Account Box Black 36dp") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
                 "Circle", "Account Circle Black 36dp") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
                 "Ind", "Assignment Ind Black 36dp") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,5 +80,8 @@ public class BestActivity extends AppCompatActivity {
                 // TODO : use item data.
             }
         }) ;
+
+        return view;
     }
+
 }
