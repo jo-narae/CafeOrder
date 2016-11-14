@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.best.BestMenuListViewAdapter;
+import com.narae.cafeorder.best.BestMenuListViewItem;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
 
@@ -36,32 +38,32 @@ public class BestActivity extends AppCompatActivity {
 
 
         final ListView listview ;
-        MenuListViewAdapter adapter;
+        BestMenuListViewAdapter adapter;
 
         // Adapter 생성
-        adapter = new MenuListViewAdapter() ;
+        adapter = new BestMenuListViewAdapter() ;
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.lv_best);
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
-                "Box", "Account Box Black 36dp") ;
+        adapter.addItem(1, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+                "Box", "30") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
-                "Circle", "Account Circle Black 36dp") ;
+        adapter.addItem(2, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+                "Circle", "15") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
-                "Ind", "Assignment Ind Black 36dp") ;
+        adapter.addItem(3, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+                "Ind", "20") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                MenuListViewItem item = (MenuListViewItem) parent.getItemAtPosition(position) ;
+                BestMenuListViewItem item = (BestMenuListViewItem) parent.getItemAtPosition(position) ;
                 String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
+                String descStr = item.getSellCount() ;
                 Drawable iconDrawable = item.getIcon();
 
                 if(seletedItem!=null) {

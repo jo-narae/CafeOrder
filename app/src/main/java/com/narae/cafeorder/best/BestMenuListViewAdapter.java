@@ -55,7 +55,7 @@ public class BestMenuListViewAdapter extends BaseAdapter {
         BestMenuListViewItem bestMenuListViewItem = MenuListViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        rankTextView.setText(bestMenuListViewItem.getRank());
+        rankTextView.setText(String.valueOf(bestMenuListViewItem.getRank())+"등");
         iconImageView.setImageDrawable(bestMenuListViewItem.getIcon());
         titleTextView.setText(bestMenuListViewItem.getTitle());
         descTextView.setText(bestMenuListViewItem.getSellCount());
@@ -76,9 +76,10 @@ public class BestMenuListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String count) {
+    public void addItem(int rank, Drawable icon, String title, String count) {
         BestMenuListViewItem item = new BestMenuListViewItem();
 
+        item.setRank(rank);
         item.setIcon(icon);
         item.setTitle(title);
         item.setSellCount(count);
