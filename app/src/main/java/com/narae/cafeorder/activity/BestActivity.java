@@ -1,10 +1,13 @@
 package com.narae.cafeorder.activity;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +20,9 @@ public class BestActivity extends AppCompatActivity {
 
     private View seletedItem;
     private Toolbar toolbar;
+
+    private LayerDrawable mCartMenuIcon;
+    private int mCartCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,5 +79,36 @@ public class BestActivity extends AppCompatActivity {
                 // TODO : use item data.
             }
         }) ;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        mCartMenuIcon = (LayerDrawable) menu.findItem(R.id.action_cart).getIcon();
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public static void setBadgeCount(Context context, LayerDrawable icon, String count) {
+
+        BadgeDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_badge);
+        if (reuse != null && reuse instanceof BadgeDrawable) {
+            badge = (BadgeDrawable) reuse;
+        } else {
+            badge = new BadgeDrawable(context);
+        }
+
+        badge.setCount(count);
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_badge, badge);
+    }
+
+    public void onClickIncrementCartCount(View view) {
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
     }
 }
