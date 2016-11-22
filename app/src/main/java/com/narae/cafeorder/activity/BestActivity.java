@@ -48,13 +48,13 @@ public class BestActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(1, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(1, ContextCompat.getDrawable(this, R.drawable.americano),
                 "Box", "30") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(2, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(2, ContextCompat.getDrawable(this, R.drawable.americano),
                 "Circle", "15") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(3, ContextCompat.getDrawable(this, R.drawable.ic_tab_contacts),
+        adapter.addItem(3, ContextCompat.getDrawable(this, R.drawable.americano),
                 "Ind", "20") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

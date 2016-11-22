@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.fragments.OneFragment;
-import com.narae.cafeorder.fragments.ThreeFragment;
-import com.narae.cafeorder.fragments.TwoFragment;
+import com.narae.cafeorder.fragments.EspressoFragment;
+import com.narae.cafeorder.fragments.TeaFragment;
+import com.narae.cafeorder.fragments.FrappuccinoFragment;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -50,9 +50,9 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "에스프레소");
-        adapter.addFragment(new TwoFragment(), "프라푸치노");
-        adapter.addFragment(new ThreeFragment(), "티");
+        adapter.addFragment(new EspressoFragment(), "에스프레소");
+        adapter.addFragment(new FrappuccinoFragment(), "프라푸치노");
+        adapter.addFragment(new TeaFragment(), "티");
         viewPager.setAdapter(adapter);
     }
 
