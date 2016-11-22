@@ -32,6 +32,10 @@
             android:name="com.narae.cafeorder.activity.BestActivity"
             android:label="@string/title_activity_best"
             android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
+        <activity
+            android:name="com.narae.cafeorder.activity.CartActivity"
+            android:label="@string/title_activity_cart"
+            android:parentActivityName="com.narae.cafeorder.activity.MainActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.narae.cafeorder.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -91,6 +93,16 @@ public class HistoryActivity extends AppCompatActivity {
         mCartMenuIcon = (LayerDrawable) menu.findItem(R.id.action_cart).getIcon();
         setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_cart) {
+            startActivity(new Intent(HistoryActivity.this, CartActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void setBadgeCount(Context context, LayerDrawable icon, String count) {
