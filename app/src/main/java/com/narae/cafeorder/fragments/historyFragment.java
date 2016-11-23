@@ -18,14 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class TwoFragment extends Fragment{
+public class HistoryFragment extends Fragment{
 
     HistoryListAdapter listAdapter;
     ExpandableListView expListView;
     List<History> historyList;
     HashMap<String, List<HistoryItem>> listChild;
 
-    public TwoFragment() {
+    public HistoryFragment() {
         // Required empty public constructor
     }
 
@@ -38,7 +38,7 @@ public class TwoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.hisExp);

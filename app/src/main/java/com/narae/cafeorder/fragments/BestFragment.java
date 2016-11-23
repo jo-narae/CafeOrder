@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import com.narae.cafeorder.R;
 
 
-public class SevenFragment extends Fragment{
+public class BestFragment extends Fragment{
 
-    public SevenFragment() {
+    public BestFragment() {
         // Required empty public constructor
     }
 

@@ -20,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.fragments.OneFragment;
-import com.narae.cafeorder.fragments.ThreeFragment;
-import com.narae.cafeorder.fragments.TwoFragment;
+import com.narae.cafeorder.fragments.CurrentFragment;
+import com.narae.cafeorder.fragments.HistoryFragment;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -52,8 +51,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ThreeFragment(), "주문현황");
-        adapter.addFragment(new TwoFragment(), "과거내역");
+        adapter.addFragment(new CurrentFragment(), "주문현황");
+        adapter.addFragment(new HistoryFragment(), "과거내역");
         viewPager.setAdapter(adapter);
     }
 
