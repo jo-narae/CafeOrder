@@ -36,8 +36,6 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         user_password = (TextView) findViewById(R.id.user_password);
         password_check = (TextView) findViewById(R.id.password_check);
 
-        //startActivity(new Intent(IntroActivity.this, MainActivity.class));
-
         createDatabase("testdb");
 
         buttonIntro.setOnClickListener(this);
@@ -47,37 +45,65 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonintro:
-                createTable("user_info");
                 if(validationCheck()) {
-                    startActivity(new Intent(IntroActivity.this, MainActivity.class));
-                    break;
+                    //startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                    //break;
                 }
                 break;
         }
     }
 
+    boolean isTableExists(SQLiteDatabase db, String tableName)
+    {
+        if (tableName == null || db == null || !db.isOpen())
+        {
+            return false;
+        }
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[] {"table", tableName});
+        if (!cursor.moveToFirst())
+        {
+            cursor.close();
+            return false;
+        }
+        int count = cursor.getInt(0);
+        cursor.close();
+        return count > 0;
+    }
+
     private void createDatabase(String name) {
-        System.out.print("create database [" + name + "]");
         try {
+            //database is connected
             db = openOrCreateDatabase(
                     name,
                     Activity.MODE_PRIVATE,
                     null
             );
-            Log.d("OK :: ", "database is created");
+            if(!isTableExists(db, "user_info")) {
+                //table create
+                createTable("user_info");
+            } else {
+                //table exist
+                selectRecord("user_info");
+            }
         } catch (Exception e) {
+            //database is not connected
             e.printStackTrace();
-            Log.d("ERROR :: ", "database is not created");
         }
     }
 
     private void createTable(String name) {
         System.out.print("create table [" + name + "]");
 
-        db.execSQL("create table if not exists " + name + "("
-            + "user_id text PRIMARY KEY, "
-            + "user_name text,"
-            + "user_password text);" );
+        try {
+            //table is created
+            db.execSQL("create table if not exists " + name + "("
+                    + "user_id text PRIMARY KEY, "
+                    + "user_name text,"
+                    + "user_password text);" );
+        } catch (Exception e) {
+            //table is not created
+            e.printStackTrace();
+        }
     }
 
     private void insertRecord(String name) {
@@ -85,9 +111,13 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void selectRecord(String name) {
-        Cursor c = db.rawQuery("SELECT * FROM " + name + " WHERE user_id= '" + user_id.getText().toString() +"'", null);
-        c.moveToFirst();
-        Log.d("user_id :::", c.getString(c.getColumnIndex("user_id")));
+        Cursor c = db.rawQuery("SELECT * FROM " + name, null);
+        if(c.moveToFirst()) {
+            // 이미 가입한 경우
+            startActivity(new Intent(IntroActivity.this, MainActivity.class));
+            c.close();
+        }
+        c.close();
     }
 
     /**
@@ -130,7 +160,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
             return false;
         }
         insertRecord("user_info");
-        selectRecord("user_info");
+        selectRecord("user_info"); //아이디 조회 후 다음 페이지로 넘어가도록 함
         return true;
     }
 }
