@@ -49,6 +49,7 @@ public class MenuListViewAdapter extends BaseAdapter {
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1) ;
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
+        TextView priceText = (TextView) convertView.findViewById(R.id.priceText) ;
 
         // Data Set(MenuListViewItemList)에서 position에 위치한 데이터 참조 획득
         MenuListViewItem MenuListViewItem = MenuListViewItemList.get(position);
@@ -57,6 +58,7 @@ public class MenuListViewAdapter extends BaseAdapter {
         iconImageView.setImageDrawable(MenuListViewItem.getIcon());
         titleTextView.setText(MenuListViewItem.getTitle());
         descTextView.setText(MenuListViewItem.getDesc());
+        priceText.setText(MenuListViewItem.getPrice());
 
         return convertView;
     }
@@ -74,12 +76,13 @@ public class MenuListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc) {
+    public void addItem(Drawable icon, String title, String desc, String price) {
         MenuListViewItem item = new MenuListViewItem();
 
         item.setIcon(icon);
         item.setTitle(title);
         item.setDesc(desc);
+        item.setPrice(price);
 
         MenuListViewItemList.add(item);
     }

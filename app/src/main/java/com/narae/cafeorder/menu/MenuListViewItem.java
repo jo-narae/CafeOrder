@@ -10,6 +10,7 @@ public class MenuListViewItem {
     private Drawable iconDrawable ;
     private String titleStr ;
     private String descStr ;
+    private String price ;
 
     public Drawable getIcon() {
         return iconDrawable;
@@ -33,5 +34,13 @@ public class MenuListViewItem {
 
     public void setDesc(String descStr) {
         this.descStr = descStr;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

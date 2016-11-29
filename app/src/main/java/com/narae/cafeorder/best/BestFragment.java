@@ -48,13 +48,13 @@ public class BestFragment extends Fragment{
 
         // 첫 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
-                "Box", "Account Box Black 36dp") ;
+                "Box", "Account Box Black 36dp", "3000원") ;
         // 두 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
-                "Circle", "Account Circle Black 36dp") ;
+                "Circle", "Account Circle Black 36dp", "3000원") ;
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_tab_contacts),
-                "Ind", "Assignment Ind Black 36dp") ;
+                "Ind", "Assignment Ind Black 36dp", "3000원") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
