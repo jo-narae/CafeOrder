@@ -43,8 +43,8 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.buttonintro:
                 if(validationCheck()) {
-                    //startActivity(new Intent(IntroActivity.this, MainActivity.class));
-                    //break;
+                    userCheck(); //디바이스 내 회원 정보가 있는지 체크
+                    break;
                 }
                 break;
         }
@@ -90,7 +90,6 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
             return false;
         }
         manager.insertUserInfo(user_id.getText().toString(), user_name.getText().toString(), user_password.getText().toString()); //회원정보 입력
-        userCheck(); //디바이스 내 회원 정보가 있는지 체크
         return true;
     }
 
