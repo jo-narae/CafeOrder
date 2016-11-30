@@ -32,6 +32,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/buttonidcheck"
             android:text="중복체크"/>
     </LinearLayout>
     <LinearLayout
