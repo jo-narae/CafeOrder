@@ -1,12 +1,8 @@
 package com.narae.cafeorder.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.database.DBManager;
 
 public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,8 +19,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
     private TextView user_name;
     private TextView user_password;
     private TextView password_check;
-
-    SQLiteDatabase db;
+    DBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +32,8 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         user_password = (TextView) findViewById(R.id.user_password);
         password_check = (TextView) findViewById(R.id.password_check);
 
-        createDatabase("testdb");
+        manager = new DBManager(this);
+        userCheck(); //디바이스 내 회원 정보가 있는지 체크
 
         buttonIntro.setOnClickListener(this);
     }
@@ -51,73 +48,6 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
         }
-    }
-
-    boolean isTableExists(SQLiteDatabase db, String tableName)
-    {
-        if (tableName == null || db == null || !db.isOpen())
-        {
-            return false;
-        }
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[] {"table", tableName});
-        if (!cursor.moveToFirst())
-        {
-            cursor.close();
-            return false;
-        }
-        int count = cursor.getInt(0);
-        cursor.close();
-        return count > 0;
-    }
-
-    private void createDatabase(String name) {
-        try {
-            //database is connected
-            db = openOrCreateDatabase(
-                    name,
-                    Activity.MODE_PRIVATE,
-                    null
-            );
-            if(!isTableExists(db, "user_info")) {
-                //table create
-                createTable("user_info");
-            } else {
-                //table exist
-                selectRecord("user_info");
-            }
-        } catch (Exception e) {
-            //database is not connected
-            e.printStackTrace();
-        }
-    }
-
-    private void createTable(String name) {
-        System.out.print("create table [" + name + "]");
-
-        try {
-            //table is created
-            db.execSQL("create table if not exists " + name + "("
-                    + "user_id text PRIMARY KEY, "
-                    + "user_name text,"
-                    + "user_password text);" );
-        } catch (Exception e) {
-            //table is not created
-            e.printStackTrace();
-        }
-    }
-
-    private void insertRecord(String name) {
-        db.execSQL("INSERT INTO " + name + " VALUES ('" + user_id.getText().toString() + "', '"+ user_name.getText().toString() + "', '" + user_password.getText().toString() + "');");
-    }
-
-    private void selectRecord(String name) {
-        Cursor c = db.rawQuery("SELECT * FROM " + name, null);
-        if(c.moveToFirst()) {
-            // 이미 가입한 경우
-            startActivity(new Intent(IntroActivity.this, MainActivity.class));
-            c.close();
-        }
-        c.close();
     }
 
     /**
@@ -159,8 +89,17 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
             toast.show();
             return false;
         }
-        insertRecord("user_info");
-        selectRecord("user_info"); //아이디 조회 후 다음 페이지로 넘어가도록 함
+        manager.insertUserInfo(user_id.getText().toString(), user_name.getText().toString(), user_password.getText().toString()); //회원정보 입력
+        userCheck(); //디바이스 내 회원 정보가 있는지 체크
         return true;
+    }
+
+    /**
+     * 디바이스 내 회원 정보가 있는지 체크
+     */
+    private void userCheck() {
+        if(manager.selectUserInfo()) {
+            startActivity(new Intent(IntroActivity.this, MainActivity.class));
+        }
     }
 }
