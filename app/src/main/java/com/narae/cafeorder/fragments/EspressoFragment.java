@@ -1,9 +1,10 @@
 package com.narae.cafeorder.fragments;
 
-import android.graphics.drawable.Drawable;
+//import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,12 @@ public class EspressoFragment extends Fragment{
     ListView listview ;
 
     private View seletedItem;
+
+    String titleStr;
+    String descStr;
+    String priceStr;
+
+    int tallPrice;
 
     public EspressoFragment() {
         // Required empty public constructor
@@ -113,9 +120,11 @@ public class EspressoFragment extends Fragment{
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 MenuListViewItem item = (MenuListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon();
+                titleStr = item.getTitle() ;
+                descStr = item.getDesc() ;
+                priceStr = item.getPrice();
+                priceStr = priceStr.substring(0, priceStr.length()-1);
+                //Drawable iconDrawable = item.getIcon();
 
                 if(seletedItem!=null) {
                     nonSelectItemInit(seletedItem);
@@ -142,6 +151,8 @@ public class EspressoFragment extends Fragment{
         TextView countText = (TextView)v.findViewById(R.id.countText);
         countText.setText("1");
         v.findViewById(R.id.coffeeICED).setSelected(false);
+        TextView priceText = (TextView) v.findViewById(R.id.priceText);
+        priceText.setText(String.valueOf(tallPrice) + "원");
     }
 
     /**
@@ -155,18 +166,41 @@ public class EspressoFragment extends Fragment{
         v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
         v.findViewById(R.id.countAdd).setOnClickListener(myListener);
         v.findViewById(R.id.countDelete).setOnClickListener(myListener);
+        v.findViewById(R.id.cartAdd).setOnClickListener(myListener);
 
         String[] sizeType = {"Tall", "Grande", "Venti"};
+        tallPrice = Integer.parseInt(priceStr);
 
-        Spinner spinnerExample = (Spinner) v.findViewById(R.id.spinnerSize);
+        Spinner s = (Spinner) v.findViewById(R.id.spinnerSize);
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                getContext(),       // 액티비티 클래스 내에 어댑터를 정의할 경우 this는 액티비티 자신을 의미합니다.
-                R.layout.spinner_item,    // 현재 선택된 항목을 보여주는 레이아웃의 ID
-                sizeType                            // 위에 정의한 문자열의 배열 객체를 대입합니다.
+                getContext(),              // 액티비티 클래스 내에 어댑터를 정의할 경우 this는 액티비티 자신을 의미합니다.
+                R.layout.spinner_item,     // 현재 선택된 항목을 보여주는 레이아웃의 ID
+                sizeType                   // 위에 정의한 문자열의 배열 객체를 대입합니다.
         );
 
         adapter.setDropDownViewResource(R.layout.dropdown_item);
-        spinnerExample.setAdapter(adapter);
+
+        final TextView priceText = (TextView) v.findViewById(R.id.priceText);
+
+        s.setAdapter(adapter);
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if(parent.getItemAtPosition(position).equals("Tall")) {
+                    priceText.setText(String.valueOf(tallPrice) + "원");
+                    priceStr = String.valueOf(tallPrice);
+                } else if(parent.getItemAtPosition(position).equals("Grande")) {
+                    priceText.setText(String.valueOf(tallPrice + 500) + "원");
+                    priceStr = String.valueOf(tallPrice + 500);
+                } else if(parent.getItemAtPosition(position).equals("Venti")) {
+                    priceText.setText(String.valueOf(tallPrice + 1000) + "원");
+                    priceStr = String.valueOf(tallPrice + 1000);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     /**
@@ -195,6 +229,19 @@ public class EspressoFragment extends Fragment{
                 case R.id.coffeeICED :
                     seletedItem.findViewById(R.id.coffeeHOT).setSelected(false);
                     seletedItem.findViewById(R.id.coffeeICED).setSelected(true);
+                    break;
+
+                case R.id.cartAdd :
+                    String temperature = "HOT";
+                    if(seletedItem.findViewById(R.id.coffeeHOT).isSelected()) {
+                        temperature = "HOT";
+                    } else {
+                        temperature = "ICED";
+                    }
+                    int totalPrice = 0;
+                    totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
+                    String text = "name : " + titleStr + ", price : " + totalPrice + ", size : " + ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString() + ", temperature : " + temperature + ", count : " + ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString();
+                    Log.d("text : ", text);
                     break;
             }
         }
