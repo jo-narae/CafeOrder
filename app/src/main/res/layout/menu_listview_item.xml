@@ -125,12 +125,12 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <Button
-            android:text="사이즈 ▼"
+        <Spinner
+            android:id="@+id/spinnerSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button3" />
-
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"/>
 
         <LinearLayout
             android:orientation="horizontal"
