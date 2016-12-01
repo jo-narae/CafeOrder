@@ -4,12 +4,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -102,6 +102,9 @@ public class EspressoFragment extends Fragment{
 
     }
 
+    /**
+     * 아이템 선택
+     */
     private void settingItemClick() {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -115,12 +118,17 @@ public class EspressoFragment extends Fragment{
                 if(seletedItem!=null) {
                     seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
                     seletedItem.findViewById(R.id.hiddenMenuLayout).setVisibility(View.GONE);
+                    //해당 아이템 초기화
+                    TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
+                    countText.setText("1");
                 }
 
                 if(seletedItem!=v) {
                     seletedItem = v;
                     v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
                     v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.countAdd).setOnClickListener(myListener);
+                    v.findViewById(R.id.countDelete).setOnClickListener(myListener);
                 } else {
                     seletedItem = null;
                 }
@@ -128,5 +136,28 @@ public class EspressoFragment extends Fragment{
             }
         });
     }
+
+    /**
+     * 선택된 아이템에 해당하는 버튼 로직
+     */
+    View.OnClickListener myListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
+            int count = Integer.parseInt(countText.getText().toString());
+            switch (view.getId()) {
+                case R.id.countAdd:
+                    count++; // 개수 증가
+                    countText.setText(String.valueOf(count));
+                    break;
+                case R.id.countDelete:
+                    if(count>1) { //최소 1 이하로는 떨어지지 않도록 한다
+                        count--; // 개수 감소
+                    }
+                    countText.setText(String.valueOf(count));
+                    break;
+            }
+        }
+    };
 
 }
