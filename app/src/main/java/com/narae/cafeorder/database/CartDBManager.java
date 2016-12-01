@@ -1,21 +1,20 @@
 package com.narae.cafeorder.database;
 
-import java.util.ArrayList;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by 성열 on 2016-11-30.
  */
 
-public class DBManager {
+public class CartDBManager {
 
     // DB관련 상수 선언
-    private static final String db_name = "testdb";
-    private static final String table_name = "user_info";
+    private static final String db_name = "testdb2";
+    private static final String table_name = "cart_list";
     public static final int dbVersion = 1;
 
     // DB관련 객체 선언
@@ -26,7 +25,7 @@ public class DBManager {
     private Context context;
 
     // 생성자
-    public DBManager(Context context) {
+    public CartDBManager(Context context) {
         this.context = context;
         this.opener = new OpenHelper(context, db_name, null, dbVersion);
         db = opener.getWritableDatabase();
@@ -39,18 +38,21 @@ public class DBManager {
                           int version) {
             super(context, name, null, version);
             // TODO Auto-generated constructor stub
+
         }
 
         // 생성된 DB가 없을 경우에 한번만 호출됨
         @Override
         public void onCreate(SQLiteDatabase arg0) {
-            // String dropSql = "drop table if exists " + tableName;
-            // db.execSQL(dropSql);
-
             String createSql = "create table " + table_name + " ("
-                    + "user_id text PRIMARY KEY, "
-                    + "user_name text,"
-                    + "user_password text)";
+                    + "seq INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "key_name text, "
+                    + "eng_name text,"
+                    + "kor_name text,"
+                    + "count text,"
+                    + "total_price text,"
+                    + "size text,"
+                    + "temperature text)";
             arg0.execSQL(createSql);
         }
 
@@ -60,19 +62,22 @@ public class DBManager {
         }
     }
 
-    // 유저 데이터 추가
-    public void insertUserInfo(String user_id, String user_name, String user_password) {
-        String sql = "INSERT INTO " + table_name + " VALUES ('" + user_id + "', '"+ user_name + "', '" + user_password + "');";
+    // 담기 데이터 추가
+    public boolean insertCartList(String key_name, String eng_name, String kor_name, String count, String total_price, String size, String temperature) {
+        String sql = "INSERT INTO " + table_name + "(key_name, eng_name, kor_name, count, total_price, size, temperature) " +
+                "VALUES ('" + key_name + "', '"+ eng_name + "', '" + kor_name + "', '" + count + "', '" + total_price + "', '" + size + "', '" + temperature + "');";
         db.execSQL(sql);
+        return true;
     }
 
-    // sqlite 내장 DB에 데이터가 있는지 체크
-    public boolean selectUserInfo() {
+    // 장바구니 총 갯수 조회
+    public boolean cartTotalCount() {
         String sql = "select * from " + table_name;
         Cursor c = db.rawQuery(sql, null);
 
         // result(Cursor 객체)가 비어 있으면 false 리턴
         if(c.moveToFirst()) {
+            c.getCount();
             c.close();
             return true;
         }

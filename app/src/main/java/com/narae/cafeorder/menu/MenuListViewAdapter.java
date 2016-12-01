@@ -56,8 +56,8 @@ public class MenuListViewAdapter extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(MenuListViewItem.getIcon());
-        titleTextView.setText(MenuListViewItem.getTitle());
-        descTextView.setText(MenuListViewItem.getDesc());
+        titleTextView.setText(MenuListViewItem.getEngName());
+        descTextView.setText(MenuListViewItem.getKorName());
         priceText.setText(MenuListViewItem.getPrice());
 
         return convertView;
@@ -76,12 +76,13 @@ public class MenuListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String desc, String price) {
+    public void addItem(Drawable icon, String keyname, String title, String desc, String price) {
         MenuListViewItem item = new MenuListViewItem();
 
         item.setIcon(icon);
-        item.setTitle(title);
-        item.setDesc(desc);
+        item.setKeyName(keyname);
+        item.setEngName(title);
+        item.setKorName(desc);
         item.setPrice(price);
 
         MenuListViewItemList.add(item);

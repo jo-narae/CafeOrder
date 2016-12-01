@@ -74,6 +74,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:id="@+id/countText"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:layout_weight="1" />
 
                 <Button

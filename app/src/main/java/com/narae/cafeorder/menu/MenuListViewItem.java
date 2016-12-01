@@ -8,8 +8,9 @@ import android.graphics.drawable.Drawable;
 
 public class MenuListViewItem {
     private Drawable iconDrawable ;
-    private String titleStr ;
-    private String descStr ;
+    private String keyName ;
+    private String engName ;
+    private String korName ;
     private String price ;
 
     public Drawable getIcon() {
@@ -20,20 +21,28 @@ public class MenuListViewItem {
         this.iconDrawable = iconDrawable;
     }
 
-    public String getTitle() {
-        return titleStr;
+    public String getKeyName() {
+        return keyName;
     }
 
-    public void setTitle(String titleStr) {
-        this.titleStr = titleStr;
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 
-    public String getDesc() {
-        return descStr;
+    public String getEngName() {
+        return engName;
     }
 
-    public void setDesc(String descStr) {
-        this.descStr = descStr;
+    public void setEngName(String engName) {
+        this.engName = engName;
+    }
+
+    public String getKorName() {
+        return korName;
+    }
+
+    public void setKorName(String korName) {
+        this.korName = korName;
     }
 
     public String getPrice() {

@@ -46,13 +46,13 @@ public class FrappuccinoFragment extends Fragment{
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano), "americano",
                 "Box", "Account Box Black 36dp", "3000원") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano), "americano",
                 "Circle", "Account Circle Black 36dp", "3000원") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.americano), "americano",
                 "Ind", "Assignment Ind Black 36dp", "3000원") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -60,9 +60,6 @@ public class FrappuccinoFragment extends Fragment{
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 MenuListViewItem item = (MenuListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle() ;
-                String descStr = item.getDesc() ;
-                Drawable iconDrawable = item.getIcon();
 
                 if(seletedItem!=null) {
                     seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);

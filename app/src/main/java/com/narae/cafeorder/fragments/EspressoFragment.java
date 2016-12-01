@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +24,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.database.CartDBManager;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
 
@@ -37,11 +40,14 @@ public class EspressoFragment extends Fragment{
 
     private View seletedItem;
 
-    String titleStr;
-    String descStr;
+    String engName;
+    String korName;
     String priceStr;
+    String keyName;
 
     int tallPrice;
+
+    CartDBManager manager;
 
     public EspressoFragment() {
         // Required empty public constructor
@@ -67,6 +73,8 @@ public class EspressoFragment extends Fragment{
         sendRequest(url);
         settingItemClick();
 
+        manager = new CartDBManager(getContext());
+
         return view;
     }
 
@@ -88,7 +96,7 @@ public class EspressoFragment extends Fragment{
                         int imageResource = getResources().getIdentifier(uri, null, packName);
 
                         if(coffee_type.equals("ESPRESSO")) {
-                            adapter.addItem(ContextCompat.getDrawable(getContext(), imageResource), eng_name, kor_name, price);
+                            adapter.addItem(ContextCompat.getDrawable(getContext(), imageResource), img_name, eng_name, kor_name, price);
                         }
 
                         // 리스트뷰 참조 및 Adapter달기
@@ -120,10 +128,11 @@ public class EspressoFragment extends Fragment{
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
                 MenuListViewItem item = (MenuListViewItem) parent.getItemAtPosition(position) ;
-                titleStr = item.getTitle() ;
-                descStr = item.getDesc() ;
+                engName = item.getEngName() ;
+                korName = item.getKorName() ;
                 priceStr = item.getPrice();
                 priceStr = priceStr.substring(0, priceStr.length()-1);
+                keyName = item.getKeyName() ;
                 //Drawable iconDrawable = item.getIcon();
 
                 if(seletedItem!=null) {
@@ -240,8 +249,15 @@ public class EspressoFragment extends Fragment{
                     }
                     int totalPrice = 0;
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
-                    String text = "name : " + titleStr + ", price : " + totalPrice + ", size : " + ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString() + ", temperature : " + temperature + ", count : " + ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString();
-                    Log.d("text : ", text);
+                    //담기 sqlite insert문 실행
+                    if(manager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
+                            ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString(), temperature)) {
+                        //sql 쿼리 실행 후 안내
+                        Toast toast = Toast.makeText(getContext(),
+                                "선택한 상품을 장바구니에 담았습니다.", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.BOTTOM, 0, 200);
+                        toast.show();
+                    }
                     break;
             }
         }
