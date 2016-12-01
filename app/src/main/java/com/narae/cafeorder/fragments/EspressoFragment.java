@@ -118,42 +118,55 @@ public class EspressoFragment extends Fragment{
                 Drawable iconDrawable = item.getIcon();
 
                 if(seletedItem!=null) {
-                    seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
-                    seletedItem.findViewById(R.id.hiddenMenuLayout).setVisibility(View.GONE);
-                    //해당 아이템 초기화
-                    TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
-                    countText.setText("1");
-                    seletedItem.findViewById(R.id.coffeeICED).setSelected(false);
+                    nonSelectItemInit(seletedItem);
                 }
 
                 if(seletedItem!=v) {
                     seletedItem = v;
-                    v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
-                    v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
-                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
-                    v.findViewById(R.id.coffeeHOT).setOnClickListener(myListener);
-                    v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
-                    v.findViewById(R.id.countAdd).setOnClickListener(myListener);
-                    v.findViewById(R.id.countDelete).setOnClickListener(myListener);
-
-                    String[] sizeType = {"Tall", "Grande", "Venti"};
-
-                    Spinner spinnerExample = (Spinner) v.findViewById(R.id.spinnerSize);
-                    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-                            getContext(),       // 액티비티 클래스 내에 어댑터를 정의할 경우 this는 액티비티 자신을 의미합니다.
-                            R.layout.spinner_item,    // 현재 선택된 항목을 보여주는 레이아웃의 ID
-                            sizeType                            // 위에 정의한 문자열의 배열 객체를 대입합니다.
-                    );
-
-                    adapter.setDropDownViewResource(R.layout.dropdown_item);
-                    spinnerExample.setAdapter(adapter);
-
+                    selectItemInit(v);
                 } else {
                     seletedItem = null;
                 }
                 // TODO : use item data.
             }
         });
+    }
+
+    /**
+     * 아이템 초기화(미선택영역)
+     */
+    private void nonSelectItemInit(View v) {
+        v.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
+        v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.GONE);
+        //해당 아이템 초기화
+        TextView countText = (TextView)v.findViewById(R.id.countText);
+        countText.setText("1");
+        v.findViewById(R.id.coffeeICED).setSelected(false);
+    }
+
+    /**
+     * 아이템 초기화(선택영역)
+     */
+    private void selectItemInit(View v) {
+        v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
+        seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
+        v.findViewById(R.id.coffeeHOT).setOnClickListener(myListener);
+        v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
+        v.findViewById(R.id.countAdd).setOnClickListener(myListener);
+        v.findViewById(R.id.countDelete).setOnClickListener(myListener);
+
+        String[] sizeType = {"Tall", "Grande", "Venti"};
+
+        Spinner spinnerExample = (Spinner) v.findViewById(R.id.spinnerSize);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+                getContext(),       // 액티비티 클래스 내에 어댑터를 정의할 경우 this는 액티비티 자신을 의미합니다.
+                R.layout.spinner_item,    // 현재 선택된 항목을 보여주는 레이아웃의 ID
+                sizeType                            // 위에 정의한 문자열의 배열 객체를 대입합니다.
+        );
+
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        spinnerExample.setAdapter(adapter);
     }
 
     /**
