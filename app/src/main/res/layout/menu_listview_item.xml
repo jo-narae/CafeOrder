@@ -109,14 +109,19 @@
                 android:text="HOT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button2"
+                android:id="@+id/coffeeHOT"
+                android:background="@drawable/red_button"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1" />
 
             <Button
                 android:text="ICED"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/coffeeICED"
+                android:background="@drawable/blue_button"
+                android:textStyle="bold"
                 android:layout_weight="1" />
         </LinearLayout>
 

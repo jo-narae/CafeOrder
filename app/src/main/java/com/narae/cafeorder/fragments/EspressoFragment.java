@@ -121,12 +121,16 @@ public class EspressoFragment extends Fragment{
                     //해당 아이템 초기화
                     TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
                     countText.setText("1");
+                    seletedItem.findViewById(R.id.coffeeICED).setSelected(false);
                 }
 
                 if(seletedItem!=v) {
                     seletedItem = v;
                     v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
                     v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
+                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
+                    v.findViewById(R.id.coffeeHOT).setOnClickListener(myListener);
+                    v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
                     v.findViewById(R.id.countAdd).setOnClickListener(myListener);
                     v.findViewById(R.id.countDelete).setOnClickListener(myListener);
                 } else {
@@ -155,6 +159,14 @@ public class EspressoFragment extends Fragment{
                         count--; // 개수 감소
                     }
                     countText.setText(String.valueOf(count));
+                    break;
+                case R.id.coffeeHOT:
+                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
+                    seletedItem.findViewById(R.id.coffeeICED).setSelected(false);
+                    break;
+                case R.id.coffeeICED :
+                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(false);
+                    seletedItem.findViewById(R.id.coffeeICED).setSelected(true);
                     break;
             }
         }
