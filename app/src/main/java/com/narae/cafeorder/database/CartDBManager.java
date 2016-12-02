@@ -71,18 +71,19 @@ public class CartDBManager {
     }
 
     // 장바구니 총 갯수 조회
-    public boolean cartTotalCount() {
+    public int cartTotalCount() {
         String sql = "select * from " + table_name;
         Cursor c = db.rawQuery(sql, null);
+        int count = 0;
 
         // result(Cursor 객체)가 비어 있으면 false 리턴
         if(c.moveToFirst()) {
-            c.getCount();
+            count = c.getCount();
             c.close();
-            return true;
+            return count;
         }
         c.close();
-        return false;
+        return count;
     }
 
 }

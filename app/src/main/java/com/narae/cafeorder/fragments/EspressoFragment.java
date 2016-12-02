@@ -24,6 +24,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.activity.OrderActivity;
 import com.narae.cafeorder.database.CartDBManager;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
@@ -257,10 +258,23 @@ public class EspressoFragment extends Fragment{
                                 "선택한 상품을 장바구니에 담았습니다.", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.BOTTOM, 0, 200);
                         toast.show();
+
+                        //장바구니 메뉴 개수 표시 시작
+                        ((OrderActivity)getActivity()).mCartCount = ((OrderActivity)getActivity()).mCartCount + 1; //장바구니 개수 동기화
+                        onClickIncrementCartCount(((OrderActivity)getActivity()).mCartCount);
+                        //장바구니 메뉴 개수 표시 끝
                     }
                     break;
             }
         }
     };
+
+    /**
+     * 장바구니 메뉴 개수 표시
+     * @param count
+     */
+    public void onClickIncrementCartCount(int count) {
+        ((OrderActivity)getActivity()).setBadgeCount(getContext(), ((OrderActivity)getActivity()).mCartMenuIcon, String.valueOf(count));
+    }
 
 }

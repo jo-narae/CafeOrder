@@ -14,12 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.database.CartDBManager;
 import com.narae.cafeorder.fragments.EspressoFragment;
 import com.narae.cafeorder.fragments.TeaFragment;
 import com.narae.cafeorder.fragments.FrappuccinoFragment;
@@ -30,8 +30,10 @@ public class OrderActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private LayerDrawable mCartMenuIcon;
-    private int mCartCount;
+    public LayerDrawable mCartMenuIcon;
+    public int mCartCount;
+
+    CartDBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class OrderActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        manager = new CartDBManager(this);
+
+        mCartCount = manager.cartTotalCount();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -93,7 +99,7 @@ public class OrderActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         mCartMenuIcon = (LayerDrawable) menu.findItem(R.id.action_cart).getIcon();
-        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -124,7 +130,4 @@ public class OrderActivity extends AppCompatActivity {
         icon.setDrawableByLayerId(R.id.ic_badge, badge);
     }
 
-    public void onClickIncrementCartCount(View view) {
-        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
-    }
 }
