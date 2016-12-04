@@ -38,7 +38,7 @@
                 android:textSize="24dp" />
 
             <TextView
-                android:id="@+id/engNameText"
+                android:id="@+id/detailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -76,10 +76,10 @@
         android:layout_margin="10dp">
 
         <Button
-            android:text="+"
+            android:text="-"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:id="@+id/btnPlus"
+            android:id="@+id/btnMinus"
             android:layout_weight="1" />
 
         <TextView
@@ -93,10 +93,10 @@
             android:layout_weight="1" />
 
         <Button
-            android:text="-"
+            android:text="+"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:id="@+id/btnMinus"
+            android:id="@+id/btnPlus"
             android:layout_weight="1" />
     </LinearLayout>
 

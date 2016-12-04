@@ -54,7 +54,7 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.cartImg) ;
         TextView korNameText = (TextView) convertView.findViewById(R.id.korNameText) ;
-        TextView engNameText = (TextView) convertView.findViewById(R.id.engNameText) ;
+        TextView detailText = (TextView) convertView.findViewById(R.id.detailText) ;
         TextView priceText = (TextView) convertView.findViewById(R.id.priceText) ;
         TextView countText = (TextView) convertView.findViewById(R.id.countText) ;
 
@@ -68,7 +68,7 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(cartMenuListViewItem.getIcon());
         korNameText.setText(cartMenuListViewItem.getKorName());
-        engNameText.setText(cartMenuListViewItem.getEngName());
+        detailText.setText(cartMenuListViewItem.getSize() + "/" + cartMenuListViewItem.getTemperature());
         priceText.setText(cartMenuListViewItem.getTotalPrice()+"원");
         countText.setText(cartMenuListViewItem.getCount());
         btnDelete.setSelected(true); //색깔 적용
@@ -97,12 +97,20 @@ public class CartMenuListViewAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View view) {
+            CartMenuListViewItem c = MenuListViewItemList.get(position);
+            int count = Integer.parseInt(c.getCount());
             switch (view.getId()) {
                 case R.id.btnPlus:
-                    Log.d("Plus", "Plus");
+                    count = count + 1;
+                    c.setCount(String.valueOf(count));
+                    notifyDataSetInvalidated();
                     break;
                 case R.id.btnMinus:
-                    Log.d("Minus", "Minus");
+                    if(count>1) { //최소 1 이하로는 떨어지지 않도록 한다
+                        count = count - 1;
+                    }
+                    c.setCount(String.valueOf(count));
+                    notifyDataSetInvalidated();
                     break;
                 case R.id.btnDelete:
                     manager.deleteCartList(String.valueOf(view.getTag()));
