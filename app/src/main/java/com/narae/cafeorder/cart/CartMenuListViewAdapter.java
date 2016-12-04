@@ -58,19 +58,19 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         Button btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
 
         // Data Set(MenuListViewItemList)에서 position에 위치한 데이터 참조 획득
-        CartMenuListViewItem bestMenuListViewItem = MenuListViewItemList.get(position);
+        CartMenuListViewItem cartMenuListViewItem = MenuListViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(bestMenuListViewItem.getIcon());
-        titleTextView.setText(bestMenuListViewItem.getTitle());
-        descTextView.setText(bestMenuListViewItem.getSellCount());
+        iconImageView.setImageDrawable(cartMenuListViewItem.getIcon());
+        titleTextView.setText(cartMenuListViewItem.getKorName());
+        descTextView.setText(cartMenuListViewItem.getCount());
         btnDelete.setSelected(true); //색깔 적용
 
         btnPlus.setOnClickListener(new ButtonClickListener(pos));
         btnMinus.setOnClickListener(new ButtonClickListener(pos));
         btnDelete.setOnClickListener(new ButtonClickListener(pos));
 
-        btnDelete.setTag(position);
+        btnDelete.setTag(cartMenuListViewItem.getSeq());
 
         return convertView;
     }
@@ -88,7 +88,6 @@ public class CartMenuListViewAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View view) {
-            Log.d("test1", "test"+position);
             switch (view.getId()) {
                 case R.id.btnPlus:
                     Log.d("Plus", "Plus");
@@ -115,17 +114,8 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         return MenuListViewItemList.get(position) ;
     }
 
+    //아이템 데이터 추가
     public void setItem(List<CartMenuListViewItem> list){
         MenuListViewItemList = list;
-    }
-    // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String title, String count) {
-        CartMenuListViewItem item = new CartMenuListViewItem();
-
-        item.setIcon(icon);
-        item.setTitle(title);
-        item.setSellCount(count);
-
-        MenuListViewItemList.add(item);
     }
 }

@@ -94,7 +94,7 @@ public class CartDBManager {
     }
 
     public List<CartMenuListViewItem> selectCartMenuList(Context context) {
-        String sql = "select kor_name, eng_name, count, total_price from " + table_name;
+        String sql = "select * from " + table_name;
         Cursor result =  db.rawQuery(sql, null);
 
         ArrayList<CartMenuListViewItem> arrayList = new ArrayList<>();
@@ -102,8 +102,13 @@ public class CartDBManager {
         while(!result.isAfterLast()){
             CartMenuListViewItem item = new CartMenuListViewItem();
             item.setIcon(ContextCompat.getDrawable(context, R.drawable.americano));
-            item.setTitle(result.getString(result.getColumnIndex("eng_name")));
-            item.setSellCount(result.getString(result.getColumnIndex("count")));
+            item.setSeq(result.getString(result.getColumnIndex("seq")));
+            item.setEngName(result.getString(result.getColumnIndex("eng_name")));
+            item.setKorName(result.getString(result.getColumnIndex("kor_name")));
+            item.setCount(result.getString(result.getColumnIndex("count")));
+            item.setTotalPrice(result.getString(result.getColumnIndex("total_price")));
+            item.setTemperature(result.getString(result.getColumnIndex("temperature")));
+            item.setSize(result.getString(result.getColumnIndex("size")));
             arrayList.add(item);
             result.moveToNext();
         }

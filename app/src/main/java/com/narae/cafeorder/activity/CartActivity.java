@@ -58,41 +58,7 @@ public class CartActivity extends AppCompatActivity {
         List<CartMenuListViewItem> list = manager.selectCartMenuList(this);
 
         adapter.setItem(list);
-/*        // 첫 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "아메리카노", "Americano") ;
-        // 두 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "카페라떼", "Cafe Latte") ;
-        // 세 번째 아이템 추가.
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "카페모카", "Caffe Mocha") ;*/
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                CartMenuListViewItem item = (CartMenuListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle() ;
-                String descStr = item.getSellCount() ;
-                Drawable iconDrawable = item.getIcon();
-                Log.d("test1", "test3333");
-                if(seletedItem!=null) {
-                    Log.d("test1", "test");
-                    seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
-                }
-
-                if(seletedItem!=v) {
-                    seletedItem = v;
-                    Log.d("test2", "test");
-                    v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("test3", "test");
-                    seletedItem = null;
-                }
-                // TODO : use item data.
-            }
-        }) ;
     }
 
 
