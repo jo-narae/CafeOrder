@@ -5,6 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.content.ContextCompat;
+
+import com.narae.cafeorder.R;
+import com.narae.cafeorder.cart.CartMenuListViewItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 성열 on 2016-11-30.
@@ -84,6 +91,24 @@ public class CartDBManager {
         }
         c.close();
         return count;
+    }
+
+    public List<CartMenuListViewItem> selectCartMenuList(Context context) {
+        String sql = "select kor_name, eng_name, count, total_price from " + table_name;
+        Cursor result =  db.rawQuery(sql, null);
+
+        ArrayList<CartMenuListViewItem> arrayList = new ArrayList<>();
+        result.moveToFirst();
+        while(!result.isAfterLast()){
+            CartMenuListViewItem item = new CartMenuListViewItem();
+            item.setIcon(ContextCompat.getDrawable(context, R.drawable.americano));
+            item.setTitle(result.getString(result.getColumnIndex("eng_name")));
+            item.setSellCount(result.getString(result.getColumnIndex("count")));
+            arrayList.add(item);
+            result.moveToNext();
+        }
+
+        return arrayList;
     }
 
 }

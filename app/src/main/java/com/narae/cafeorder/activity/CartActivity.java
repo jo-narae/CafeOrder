@@ -2,6 +2,7 @@ package com.narae.cafeorder.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import android.widget.ListView;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.cart.CartMenuListViewAdapter;
 import com.narae.cafeorder.cart.CartMenuListViewItem;
+import com.narae.cafeorder.database.CartDBManager;
+
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -26,6 +30,8 @@ public class CartActivity extends AppCompatActivity {
 
     private LayerDrawable mCartMenuIcon;
     private int mCartCount;
+
+    CartDBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        manager = new CartDBManager(this);
 
         final ListView listview ;
         CartMenuListViewAdapter adapter;
@@ -48,7 +55,10 @@ public class CartActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.lv_best);
         listview.setAdapter(adapter);
 
-        // 첫 번째 아이템 추가.
+        List<CartMenuListViewItem> list = manager.selectCartMenuList(this);
+
+        adapter.setItem(list);
+/*        // 첫 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
                 "아메리카노", "Americano") ;
         // 두 번째 아이템 추가.
@@ -56,7 +66,7 @@ public class CartActivity extends AppCompatActivity {
                 "카페라떼", "Cafe Latte") ;
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "카페모카", "Caffe Mocha") ;
+                "카페모카", "Caffe Mocha") ;*/
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.narae.cafeorder.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by existmaster on 2016. 11. 13..
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class CartMenuListViewAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<CartMenuListViewItem> MenuListViewItemList = new ArrayList<CartMenuListViewItem>() ;
+    private List<CartMenuListViewItem> MenuListViewItemList = new ArrayList<CartMenuListViewItem>() ;
 
     // ListViewAdapter의 생성자
     public CartMenuListViewAdapter() {
@@ -114,6 +115,9 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         return MenuListViewItemList.get(position) ;
     }
 
+    public void setItem(List<CartMenuListViewItem> list){
+        MenuListViewItemList = list;
+    }
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable icon, String title, String count) {
         CartMenuListViewItem item = new CartMenuListViewItem();
