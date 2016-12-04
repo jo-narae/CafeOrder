@@ -77,8 +77,6 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         btnMinus.setOnClickListener(new ButtonClickListener(pos));
         btnDelete.setOnClickListener(new ButtonClickListener(pos));
 
-        btnDelete.setTag(cartMenuListViewItem.getSeq());
-
         manager = new CartDBManager(context);
 
         return convertView;
@@ -99,21 +97,29 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         public void onClick(View view) {
             CartMenuListViewItem c = MenuListViewItemList.get(position);
             int count = Integer.parseInt(c.getCount());
+            int price = Integer.parseInt(c.getTotalPrice());
+            price = price / count;
             switch (view.getId()) {
                 case R.id.btnPlus:
                     count = count + 1;
+                    price = price * count;
                     c.setCount(String.valueOf(count));
+                    c.setTotalPrice(String.valueOf(price));
+                    manager.updateCartList(c.getSeq(), c.getCount(), c.getTotalPrice());
                     notifyDataSetInvalidated();
                     break;
                 case R.id.btnMinus:
                     if(count>1) { //최소 1 이하로는 떨어지지 않도록 한다
                         count = count - 1;
                     }
+                    price = price * count;
                     c.setCount(String.valueOf(count));
+                    c.setTotalPrice(String.valueOf(price));
+                    manager.updateCartList(c.getSeq(), c.getCount(), c.getTotalPrice());
                     notifyDataSetInvalidated();
                     break;
                 case R.id.btnDelete:
-                    manager.deleteCartList(String.valueOf(view.getTag()));
+                    manager.deleteCartList(c.getSeq());
                     MenuListViewItemList.remove(position);
                     notifyDataSetInvalidated();
                     break;

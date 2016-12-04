@@ -134,10 +134,17 @@ public class CartDBManager {
     /**
      * 장바구니 데이터 삭제
      */
-    public boolean deleteCartList(String seq) {
+    public void deleteCartList(String seq) {
         String sql = "DELETE FROM " + table_name + " WHERE seq=" + seq;
         db.execSQL(sql);
-        return true;
+    }
+
+    /**
+     * 장바구니 개수 및 총 가격 수정
+     */
+    public void updateCartList(String seq, String count, String total_price) {
+        String sql = "UPDATE " + table_name + " SET count = " + count + ", total_price = " + total_price + " WHERE seq=" + seq;
+        db.execSQL(sql);
     }
 
 }
