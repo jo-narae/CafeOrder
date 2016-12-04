@@ -1,27 +1,36 @@
 package com.narae.cafeorder.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.best.BestMenuListViewAdapter;
-import com.narae.cafeorder.best.BestMenuListViewItem;
+import com.narae.cafeorder.cart.CartMenuListViewAdapter;
+import com.narae.cafeorder.cart.CartMenuListViewItem;
 
 public class CartActivity extends AppCompatActivity {
 
     private View seletedItem;
     private Toolbar toolbar;
 
+    private LayerDrawable mCartMenuIcon;
+    private int mCartCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_best);
+        setContentView(R.layout.activity_cart);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,48 +39,90 @@ public class CartActivity extends AppCompatActivity {
 
 
         final ListView listview ;
-        BestMenuListViewAdapter adapter;
+        CartMenuListViewAdapter adapter;
 
         // Adapter 생성
-        adapter = new BestMenuListViewAdapter() ;
+        adapter = new CartMenuListViewAdapter() ;
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.lv_best);
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(1, ContextCompat.getDrawable(this, R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
                 "Box", "30") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(2, ContextCompat.getDrawable(this, R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
                 "Circle", "15") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(3, ContextCompat.getDrawable(this, R.drawable.americano),
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
                 "Ind", "20") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                BestMenuListViewItem item = (BestMenuListViewItem) parent.getItemAtPosition(position) ;
+                CartMenuListViewItem item = (CartMenuListViewItem) parent.getItemAtPosition(position) ;
                 String titleStr = item.getTitle() ;
                 String descStr = item.getSellCount() ;
                 Drawable iconDrawable = item.getIcon();
-
+                Log.d("test1", "test3333");
                 if(seletedItem!=null) {
+                    Log.d("test1", "test");
                     seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
-                    seletedItem.findViewById(R.id.hiddenMenuLayout).setVisibility(View.GONE);
                 }
 
                 if(seletedItem!=v) {
                     seletedItem = v;
+                    Log.d("test2", "test");
                     v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
-                    v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
                 } else {
+                    Log.d("test3", "test");
                     seletedItem = null;
                 }
                 // TODO : use item data.
             }
         }) ;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        mCartMenuIcon = (LayerDrawable) menu.findItem(R.id.action_cart).getIcon();
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_cart) {
+            startActivity(new Intent(CartActivity.this, BestActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static void setBadgeCount(Context context, LayerDrawable icon, String count) {
+
+        BadgeDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_badge);
+        if (reuse != null && reuse instanceof BadgeDrawable) {
+            badge = (BadgeDrawable) reuse;
+        } else {
+            badge = new BadgeDrawable(context);
+        }
+
+        badge.setCount(count);
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_badge, badge);
+    }
+
+    public void onClickIncrementCartCount(View view) {
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
     }
 }
