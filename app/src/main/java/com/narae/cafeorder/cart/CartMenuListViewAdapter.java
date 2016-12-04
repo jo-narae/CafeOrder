@@ -54,6 +54,7 @@ public class CartMenuListViewAdapter extends BaseAdapter {
 
         Button btnPlus = (Button) convertView.findViewById(R.id.btnPlus);
         Button btnMinus = (Button) convertView.findViewById(R.id.btnMinus);
+        Button btnDelete = (Button) convertView.findViewById(R.id.btnDelete);
 
         // Data Set(MenuListViewItemList)에서 position에 위치한 데이터 참조 획득
         CartMenuListViewItem bestMenuListViewItem = MenuListViewItemList.get(position);
@@ -62,9 +63,13 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         iconImageView.setImageDrawable(bestMenuListViewItem.getIcon());
         titleTextView.setText(bestMenuListViewItem.getTitle());
         descTextView.setText(bestMenuListViewItem.getSellCount());
+        btnDelete.setSelected(true); //색깔 적용
 
         btnPlus.setOnClickListener(new ButtonClickListener(pos));
         btnMinus.setOnClickListener(new ButtonClickListener(pos));
+        btnDelete.setOnClickListener(new ButtonClickListener(pos));
+
+        btnDelete.setTag(position);
 
         return convertView;
     }
@@ -89,6 +94,9 @@ public class CartMenuListViewAdapter extends BaseAdapter {
                     break;
                 case R.id.btnMinus:
                     Log.d("Minus", "Minus");
+                    break;
+                case R.id.btnDelete:
+                    Log.d("Delete", String.valueOf(view.getTag()));
                     break;
             }
 

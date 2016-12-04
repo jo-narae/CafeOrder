@@ -50,13 +50,13 @@ public class CartActivity extends AppCompatActivity {
 
         // 첫 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "Box", "30") ;
+                "아메리카노", "Americano") ;
         // 두 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "Circle", "15") ;
+                "카페라떼", "Cafe Latte") ;
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.americano),
-                "Ind", "20") ;
+                "카페모카", "Caffe Mocha") ;
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
