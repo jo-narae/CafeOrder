@@ -39,7 +39,7 @@ public class CartActivity extends AppCompatActivity {
         adapter = new CartMenuListViewAdapter() ;
 
         // 리스트뷰 참조 및 Adapter달기
-        listview = (ListView) findViewById(R.id.lv_best);
+        listview = (ListView) findViewById(R.id.lv_cart);
         listview.setAdapter(adapter);
 
         List<CartMenuListViewItem> list = manager.selectCartList(this);

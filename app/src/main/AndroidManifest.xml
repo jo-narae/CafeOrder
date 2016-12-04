@@ -43,7 +43,7 @@
         <activity
             android:name=".activity.CartActivity"
             android:label="@string/title_activity_cart"
-            android:parentActivityName=".activity.OrderActivity" />
+            android:parentActivityName=".activity.BestActivity" />
     </application>
 
 </manifest>
