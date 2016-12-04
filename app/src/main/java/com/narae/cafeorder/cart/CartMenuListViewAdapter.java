@@ -52,9 +52,11 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.iv_best) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.tv_name) ;
-        TextView descTextView = (TextView) convertView.findViewById(R.id.tv_count) ;
+        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.cartImg) ;
+        TextView korNameText = (TextView) convertView.findViewById(R.id.korNameText) ;
+        TextView engNameText = (TextView) convertView.findViewById(R.id.engNameText) ;
+        TextView priceText = (TextView) convertView.findViewById(R.id.priceText) ;
+        TextView countText = (TextView) convertView.findViewById(R.id.countText) ;
 
         Button btnPlus = (Button) convertView.findViewById(R.id.btnPlus);
         Button btnMinus = (Button) convertView.findViewById(R.id.btnMinus);
@@ -65,8 +67,10 @@ public class CartMenuListViewAdapter extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(cartMenuListViewItem.getIcon());
-        titleTextView.setText(cartMenuListViewItem.getKorName());
-        descTextView.setText(cartMenuListViewItem.getCount());
+        korNameText.setText(cartMenuListViewItem.getKorName());
+        engNameText.setText(cartMenuListViewItem.getEngName());
+        priceText.setText(cartMenuListViewItem.getTotalPrice()+"원");
+        countText.setText(cartMenuListViewItem.getCount());
         btnDelete.setSelected(true); //색깔 적용
 
         btnPlus.setOnClickListener(new ButtonClickListener(pos));

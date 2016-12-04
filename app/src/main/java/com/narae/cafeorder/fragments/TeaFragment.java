@@ -198,13 +198,13 @@ public class TeaFragment extends Fragment{
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 if(parent.getItemAtPosition(position).equals("Tall")) {
-                    priceText.setText(String.valueOf(tallPrice) + "원");
+                    priceText.setText(String.valueOf(tallPrice * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice);
                 } else if(parent.getItemAtPosition(position).equals("Grande")) {
-                    priceText.setText(String.valueOf(tallPrice + 500) + "원");
+                    priceText.setText(String.valueOf((tallPrice + 500) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice + 500);
                 } else if(parent.getItemAtPosition(position).equals("Venti")) {
-                    priceText.setText(String.valueOf(tallPrice + 1000) + "원");
+                    priceText.setText(String.valueOf((tallPrice + 1000) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice + 1000);
                 }
             }
@@ -220,17 +220,20 @@ public class TeaFragment extends Fragment{
         @Override
         public void onClick(View view) {
             TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
+            TextView priceText = (TextView)seletedItem.findViewById(R.id.priceText);
             int count = Integer.parseInt(countText.getText().toString());
             switch (view.getId()) {
                 case R.id.countAdd:
                     count++; // 개수 증가
                     countText.setText(String.valueOf(count));
+                    priceText.setText(String.valueOf(Integer.parseInt(priceStr)*count)+"원");
                     break;
                 case R.id.countDelete:
                     if(count>1) { //최소 1 이하로는 떨어지지 않도록 한다
                         count--; // 개수 감소
                     }
                     countText.setText(String.valueOf(count));
+                    priceText.setText(String.valueOf(Integer.parseInt(priceStr)*count)+"원");
                     break;
                 case R.id.coffeeHOT:
                     seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);

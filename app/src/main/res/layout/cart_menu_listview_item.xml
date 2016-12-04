@@ -12,7 +12,7 @@
         android:layout_weight="4"
         android:layout_marginTop="10dp">
         <ImageView
-            android:id="@+id/iv_best"
+            android:id="@+id/cartImg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingBottom="10dp"
@@ -27,7 +27,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/korNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -38,7 +38,7 @@
                 android:textSize="24dp" />
 
             <TextView
-                android:id="@+id/text1"
+                android:id="@+id/engNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/tv_price"
+                android:id="@+id/priceText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,13 +73,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
-        android:id="@+id/hiddenCount"
-        android:visibility="visible"
         android:layout_margin="10dp">
 
         <Button
             android:text="+"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnPlus"
             android:layout_weight="1" />
@@ -89,12 +87,14 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/tv_count"
+            android:id="@+id/countText"
+            android:textColor="#000000"
+            android:textSize="20dp"
             android:layout_weight="1" />
 
         <Button
             android:text="-"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:id="@+id/btnMinus"
             android:layout_weight="1" />
