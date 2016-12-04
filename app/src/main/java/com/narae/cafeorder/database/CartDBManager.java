@@ -31,14 +31,18 @@ public class CartDBManager {
     // 부가적인 객체들
     private Context context;
 
-    // 생성자
+    /**
+     * 생성자
+     */
     public CartDBManager(Context context) {
         this.context = context;
         this.opener = new OpenHelper(context, db_name, null, dbVersion);
         db = opener.getWritableDatabase();
     }
 
-    // Opener of DB and Table
+    /**
+     * Opener of DB and Table
+     */
     private class OpenHelper extends SQLiteOpenHelper {
 
         public OpenHelper(Context context, String name, CursorFactory factory,
@@ -69,7 +73,9 @@ public class CartDBManager {
         }
     }
 
-    // 담기 데이터 추가
+    /**
+     * 장바구니 데이터 입력
+     */
     public boolean insertCartList(String key_name, String eng_name, String kor_name, String count, String total_price, String size, String temperature) {
         String sql = "INSERT INTO " + table_name + "(key_name, eng_name, kor_name, count, total_price, size, temperature) " +
                 "VALUES ('" + key_name + "', '"+ eng_name + "', '" + kor_name + "', '" + count + "', '" + total_price + "', '" + size + "', '" + temperature + "');";
@@ -77,7 +83,9 @@ public class CartDBManager {
         return true;
     }
 
-    // 장바구니 총 갯수 조회
+    /**
+     * 장바구니 총 개수 조회
+     */
     public int cartTotalCount() {
         String sql = "select * from " + table_name;
         Cursor c = db.rawQuery(sql, null);
@@ -93,15 +101,22 @@ public class CartDBManager {
         return count;
     }
 
-    public List<CartMenuListViewItem> selectCartMenuList(Context context) {
+    /**
+     * 장바구니 리스트
+     */
+    public List<CartMenuListViewItem> selectCartList(Context context) {
         String sql = "select * from " + table_name;
         Cursor result =  db.rawQuery(sql, null);
 
         ArrayList<CartMenuListViewItem> arrayList = new ArrayList<>();
         result.moveToFirst();
         while(!result.isAfterLast()){
+            String uri = "@drawable/" + result.getString(result.getColumnIndex("key_name"));
+            String packName = context.getPackageName(); // 패키지명
+            int imageResource = context.getResources().getIdentifier(uri, null, packName);
+
             CartMenuListViewItem item = new CartMenuListViewItem();
-            item.setIcon(ContextCompat.getDrawable(context, R.drawable.americano));
+            item.setIcon(ContextCompat.getDrawable(context, imageResource));
             item.setSeq(result.getString(result.getColumnIndex("seq")));
             item.setEngName(result.getString(result.getColumnIndex("eng_name")));
             item.setKorName(result.getString(result.getColumnIndex("kor_name")));
@@ -114,6 +129,15 @@ public class CartDBManager {
         }
 
         return arrayList;
+    }
+
+    /**
+     * 장바구니 데이터 삭제
+     */
+    public boolean deleteCartList(String seq) {
+        String sql = "DELETE FROM " + table_name + " WHERE seq=" + seq;
+        db.execSQL(sql);
+        return true;
     }
 
 }

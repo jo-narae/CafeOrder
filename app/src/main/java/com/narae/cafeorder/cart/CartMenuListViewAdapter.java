@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.database.CartDBManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.List;
  */
 
 public class CartMenuListViewAdapter extends BaseAdapter {
+
+    CartDBManager manager;
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private List<CartMenuListViewItem> MenuListViewItemList = new ArrayList<CartMenuListViewItem>() ;
@@ -72,6 +75,8 @@ public class CartMenuListViewAdapter extends BaseAdapter {
 
         btnDelete.setTag(cartMenuListViewItem.getSeq());
 
+        manager = new CartDBManager(context);
+
         return convertView;
     }
 
@@ -96,7 +101,9 @@ public class CartMenuListViewAdapter extends BaseAdapter {
                     Log.d("Minus", "Minus");
                     break;
                 case R.id.btnDelete:
-                    Log.d("Delete", String.valueOf(view.getTag()));
+                    manager.deleteCartList(String.valueOf(view.getTag()));
+                    MenuListViewItemList.remove(position);
+                    notifyDataSetInvalidated();
                     break;
             }
 

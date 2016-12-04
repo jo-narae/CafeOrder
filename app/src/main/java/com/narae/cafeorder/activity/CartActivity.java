@@ -55,7 +55,7 @@ public class CartActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.lv_best);
         listview.setAdapter(adapter);
 
-        List<CartMenuListViewItem> list = manager.selectCartMenuList(this);
+        List<CartMenuListViewItem> list = manager.selectCartList(this);
 
         adapter.setItem(list);
 
