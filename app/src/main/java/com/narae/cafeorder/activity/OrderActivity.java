@@ -56,6 +56,16 @@ public class OrderActivity extends AppCompatActivity {
         mCartCount = manager.cartTotalCount();
     }
 
+    /**
+     * 뒤로 가기시 재실행
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mCartCount = manager.cartTotalCount();
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount));
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new EspressoFragment(), "에스프레소");
@@ -129,5 +139,4 @@ public class OrderActivity extends AppCompatActivity {
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_badge, badge);
     }
-
 }

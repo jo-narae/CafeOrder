@@ -102,6 +102,24 @@ public class CartDBManager {
     }
 
     /**
+     * 장바구니 총 주문금액 조회
+     */
+    public String cartTotalPrice() {
+        String sql = "select sum(total_price) as total_price from " + table_name;
+        Cursor c = db.rawQuery(sql, null);
+        String price = "";
+
+        // result(Cursor 객체)가 비어 있으면 false 리턴
+        if(c.moveToFirst()) {
+            price = c.getString(c.getColumnIndex("total_price"));
+            c.close();
+            return price;
+        }
+        c.close();
+        return price;
+    }
+
+    /**
      * 장바구니 리스트
      */
     public List<CartMenuListViewItem> selectCartList(Context context) {

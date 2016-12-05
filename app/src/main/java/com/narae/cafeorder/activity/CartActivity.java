@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.cart.CartMenuListViewAdapter;
@@ -45,6 +46,13 @@ public class CartActivity extends AppCompatActivity {
         List<CartMenuListViewItem> list = manager.selectCartList(this);
 
         adapter.setItem(list);
+
+        if(manager.cartTotalCount()>0) {
+            TextView totalCountText = (TextView) findViewById(R.id.totalCount);
+            TextView totalPriceText = (TextView) findViewById(R.id.totalPrice);
+            totalCountText.setText(manager.cartTotalCount() + "건");
+            totalPriceText.setText(manager.cartTotalPrice() + "원");
+        }
 
     }
 
