@@ -1,5 +1,6 @@
 package com.narae.cafeorder.cart;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.activity.CartActivity;
 import com.narae.cafeorder.database.CartDBManager;
 
 import java.util.ArrayList;
@@ -22,13 +24,16 @@ import java.util.List;
 public class CartMenuListViewAdapter extends BaseAdapter {
 
     CartDBManager manager;
+    Activity cartViewActivity;
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private List<CartMenuListViewItem> MenuListViewItemList = new ArrayList<CartMenuListViewItem>() ;
 
     // ListViewAdapter의 생성자
     public CartMenuListViewAdapter() {
-
+    }
+    public CartMenuListViewAdapter(CartActivity cartActivity) {
+        cartViewActivity = cartActivity;
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -105,6 +110,7 @@ public class CartMenuListViewAdapter extends BaseAdapter {
                     c.setTotalPrice(String.valueOf(price));
                     manager.updateCartList(c.getSeq(), c.getCount(), c.getTotalPrice());
                     notifyDataSetInvalidated();
+                    viewChangeValue();
                     break;
                 case R.id.btnMinus:
                     if(count>1) { //최소 1 이하로는 떨어지지 않도록 한다
@@ -115,12 +121,13 @@ public class CartMenuListViewAdapter extends BaseAdapter {
                     c.setTotalPrice(String.valueOf(price));
                     manager.updateCartList(c.getSeq(), c.getCount(), c.getTotalPrice());
                     notifyDataSetInvalidated();
+                    viewChangeValue();
                     break;
                 case R.id.btnDelete:
                     manager.deleteCartList(c.getSeq());
                     MenuListViewItemList.remove(position);
                     notifyDataSetInvalidated();
-
+                    viewChangeValue();
                     break;
             }
 
@@ -141,5 +148,21 @@ public class CartMenuListViewAdapter extends BaseAdapter {
     //아이템 데이터 추가
     public void setItem(List<CartMenuListViewItem> list){
         MenuListViewItemList = list;
+    }
+
+    public void viewChangeValue() {
+        if(manager.cartTotalCount()>0) {
+            TextView totalCountText = (TextView) cartViewActivity.findViewById(R.id.totalCount);
+            TextView totalPriceText = (TextView) cartViewActivity.findViewById(R.id.totalPrice);
+            totalCountText.setText(manager.cartTotalCount() + "건");
+            totalPriceText.setText(manager.cartTotalPrice() + "원");
+            cartViewActivity.findViewById(R.id.noItemResult).setVisibility(View.GONE);
+            cartViewActivity.findViewById(R.id.lv_cart).setVisibility(View.VISIBLE);
+            cartViewActivity.findViewById(R.id.totalResult).setVisibility(View.VISIBLE);
+        } else {
+            cartViewActivity.findViewById(R.id.lv_cart).setVisibility(View.GONE);
+            cartViewActivity.findViewById(R.id.totalResult).setVisibility(View.GONE);
+            cartViewActivity.findViewById(R.id.noItemResult).setVisibility(View.VISIBLE);
+        }
     }
 }

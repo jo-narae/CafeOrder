@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class CartActivity extends AppCompatActivity {
         CartMenuListViewAdapter adapter;
 
         // Adapter 생성
-        adapter = new CartMenuListViewAdapter() ;
+        adapter = new CartMenuListViewAdapter(this) ;
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.lv_cart);
@@ -52,6 +53,12 @@ public class CartActivity extends AppCompatActivity {
             TextView totalPriceText = (TextView) findViewById(R.id.totalPrice);
             totalCountText.setText(manager.cartTotalCount() + "건");
             totalPriceText.setText(manager.cartTotalPrice() + "원");
+            findViewById(R.id.noItemResult).setVisibility(View.GONE);
+            listview.setVisibility(View.VISIBLE);
+            findViewById(R.id.totalResult).setVisibility(View.VISIBLE);
+        } else {
+            listview.setVisibility(View.GONE);
+            findViewById(R.id.totalResult).setVisibility(View.GONE);
         }
 
     }

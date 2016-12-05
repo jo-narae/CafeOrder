@@ -12,6 +12,26 @@
         android:id="@+id/lv_cart"
         android:layout_weight="1"/>
     <LinearLayout
+        android:id="@+id/noItemResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/nocart"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="장바구니가 비었습니다" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/totalResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
