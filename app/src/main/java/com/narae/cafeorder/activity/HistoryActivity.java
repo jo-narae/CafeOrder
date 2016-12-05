@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
+import com.narae.cafeorder.database.CartDBManager;
 import com.narae.cafeorder.fragments.CurrentFragment;
 import com.narae.cafeorder.fragments.HistoryFragment;
 
@@ -31,6 +32,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private LayerDrawable mCartMenuIcon;
     private int mCartCount;
+
+    CartDBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,19 @@ public class HistoryActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        manager = new CartDBManager(this);
+        mCartCount = manager.cartTotalCount();
+    }
+
+    /**
+     * 뒤로 가기시 재실행
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mCartCount = manager.cartTotalCount();
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount));
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -119,10 +135,6 @@ public class HistoryActivity extends AppCompatActivity {
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_badge, badge);
-    }
-
-    public void onClickIncrementCartCount(View view) {
-        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
     }
 
 }

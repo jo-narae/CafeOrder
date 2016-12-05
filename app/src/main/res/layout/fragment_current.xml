@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="음료 제작"
+                    android:text="음료 제조"
                     android:layout_marginTop="10px"
                     android:layout_marginLeft="20px"/>
 
@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="음료 완성"
+                    android:text="주문 완료"
                     android:layout_marginTop="14px"
                     android:layout_marginLeft="20px"/>
 
@@ -112,19 +112,6 @@
                 android:textSize="17dp"
                 android:layout_marginTop="14px"
                 android:layout_marginLeft="20px"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:padding="15dp" >
-            <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Increment Cart Count"
-
-                android:onClick="onClickIncrementCartCount"/>
 
         </LinearLayout>
 
