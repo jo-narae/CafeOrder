@@ -18,20 +18,15 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<History> historyList;
-    // child data in format of header title, child title
-    private HashMap<String, List<HistoryItem>> listChild;
 
-    public HistoryListAdapter(Context context, List<History> historyList,
-                              HashMap<String, List<HistoryItem>> listChild) {
+    public HistoryListAdapter(Context context, List<History> historyList) {
         this._context = context;
         this.historyList = historyList;
-        this.listChild = listChild;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this.listChild.get(this.historyList.get(groupPosition).getId())
-                .get(childPosititon);
+        return historyList.get(groupPosition).getHistoryItems().get(childPosititon);
     }
 
     @Override
@@ -71,7 +66,8 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listChild.get(this.historyList.get(groupPosition).getId()).size();
+        return this.historyList.get(groupPosition).getHistoryItems().size();
+        /*return this.listChild.get(this.historyList.get(groupPosition).getId()).size();*/
     }
 
     @Override

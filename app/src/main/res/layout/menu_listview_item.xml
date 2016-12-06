@@ -33,7 +33,7 @@
                 android:textStyle="bold"
                 android:text="New Text"
                 android:textColor="@color/colorPrimary"
-                android:textSize="24dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/engNameText"

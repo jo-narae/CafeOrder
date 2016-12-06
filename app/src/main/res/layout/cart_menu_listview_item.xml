@@ -35,7 +35,7 @@
                 android:text="New Text"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textSize="24dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/detailText"

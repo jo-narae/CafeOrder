@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Main Title"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="@color/colorPrimary" >
                 </TextView>
 
