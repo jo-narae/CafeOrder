@@ -136,6 +136,7 @@ public class CartDBManager {
             CartMenuListViewItem item = new CartMenuListViewItem();
             item.setIcon(ContextCompat.getDrawable(context, imageResource));
             item.setSeq(result.getString(result.getColumnIndex("seq")));
+            item.setKeyName(result.getString(result.getColumnIndex("key_name")));
             item.setEngName(result.getString(result.getColumnIndex("eng_name")));
             item.setKorName(result.getString(result.getColumnIndex("kor_name")));
             item.setCount(result.getString(result.getColumnIndex("count")));
@@ -154,6 +155,14 @@ public class CartDBManager {
      */
     public void deleteCartList(String seq) {
         String sql = "DELETE FROM " + table_name + " WHERE seq=" + seq;
+        db.execSQL(sql);
+    }
+
+    /**
+     * 장바구니 전체 삭제
+     */
+    public void allDeleteCartList() {
+        String sql = "DELETE FROM " + table_name;
         db.execSQL(sql);
     }
 

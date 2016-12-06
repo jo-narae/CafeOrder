@@ -70,6 +70,7 @@
                 android:text="100000원"/>
         </RelativeLayout>
         <Button
+            android:id="@+id/btnOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="주문하기"/>

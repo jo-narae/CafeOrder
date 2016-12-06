@@ -1,6 +1,5 @@
 package com.narae.cafeorder.database;
 
-import java.util.ArrayList;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -78,6 +77,22 @@ public class UserDBManager {
         }
         c.close();
         return false;
+    }
+
+    // sqlite 내장 DB에 데이터가 있는지 체크
+    public String selectUserId() {
+        String sql = "select user_id from " + table_name;
+        Cursor c = db.rawQuery(sql, null);
+        String userId = "";
+
+        // result(Cursor 객체)가 비어 있으면 false 리턴
+        if(c.moveToFirst()) {
+            userId = c.getString(c.getColumnIndex("user_id"));
+            c.close();
+            return userId;
+        }
+        c.close();
+        return userId;
     }
 
 }

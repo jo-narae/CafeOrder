@@ -1,6 +1,7 @@
 package com.narae.cafeorder.fragments;
 
 //import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -169,16 +171,18 @@ public class FrappuccinoFragment extends Fragment{
      * 아이템 초기화(선택영역)
      */
     private void selectItemInit(View v) {
+        Button redButton = (Button) seletedItem.findViewById(R.id.coffeeHOT);
         v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
         v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
-        seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
+        redButton.setSelected(true);
+        redButton.setTextColor(Color.WHITE);
         v.findViewById(R.id.coffeeHOT).setOnClickListener(myListener);
         v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
         v.findViewById(R.id.countAdd).setOnClickListener(myListener);
         v.findViewById(R.id.countDelete).setOnClickListener(myListener);
         v.findViewById(R.id.cartAdd).setOnClickListener(myListener);
 
-        String[] sizeType = {"Tall", "Grande", "Venti"};
+        String[] sizeType = {"TALL", "GRANDE", "VENTI"};
         tallPrice = Integer.parseInt(priceStr);
 
         Spinner s = (Spinner) v.findViewById(R.id.spinnerSize);
@@ -197,13 +201,13 @@ public class FrappuccinoFragment extends Fragment{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                if(parent.getItemAtPosition(position).equals("Tall")) {
+                if(parent.getItemAtPosition(position).equals("TALL")) {
                     priceText.setText(String.valueOf(tallPrice * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice);
-                } else if(parent.getItemAtPosition(position).equals("Grande")) {
+                } else if(parent.getItemAtPosition(position).equals("GRANDE")) {
                     priceText.setText(String.valueOf((tallPrice + 500) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice + 500);
-                } else if(parent.getItemAtPosition(position).equals("Venti")) {
+                } else if(parent.getItemAtPosition(position).equals("VENTI")) {
                     priceText.setText(String.valueOf((tallPrice + 1000) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString())) + "원");
                     priceStr = String.valueOf(tallPrice + 1000);
                 }
@@ -221,6 +225,8 @@ public class FrappuccinoFragment extends Fragment{
         public void onClick(View view) {
             TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
             TextView priceText = (TextView)seletedItem.findViewById(R.id.priceText);
+            Button redButton = (Button) seletedItem.findViewById(R.id.coffeeHOT);
+            Button blueButton = (Button) seletedItem.findViewById(R.id.coffeeICED);
             int count = Integer.parseInt(countText.getText().toString());
             switch (view.getId()) {
                 case R.id.countAdd:
@@ -236,12 +242,16 @@ public class FrappuccinoFragment extends Fragment{
                     priceText.setText(String.valueOf(Integer.parseInt(priceStr)*count)+"원");
                     break;
                 case R.id.coffeeHOT:
-                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(true);
-                    seletedItem.findViewById(R.id.coffeeICED).setSelected(false);
+                    redButton.setSelected(true);
+                    redButton.setTextColor(Color.WHITE);
+                    blueButton.setSelected(false);
+                    blueButton.setTextColor(Color.BLACK);
                     break;
                 case R.id.coffeeICED :
-                    seletedItem.findViewById(R.id.coffeeHOT).setSelected(false);
-                    seletedItem.findViewById(R.id.coffeeICED).setSelected(true);
+                    blueButton.setSelected(true);
+                    blueButton.setTextColor(Color.WHITE);
+                    redButton.setSelected(false);
+                    redButton.setTextColor(Color.BLACK);
                     break;
 
                 case R.id.cartAdd :
