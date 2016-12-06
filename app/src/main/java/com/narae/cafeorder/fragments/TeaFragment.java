@@ -1,11 +1,11 @@
 package com.narae.cafeorder.fragments;
 
-//import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +24,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.activity.OrderActivity;
 import com.narae.cafeorder.database.CartDBManager;
+import com.narae.cafeorder.database.UserDBManager;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
 
@@ -50,7 +52,8 @@ public class TeaFragment extends Fragment{
 
     int tallPrice;
 
-    CartDBManager manager;
+    CartDBManager cartManager;
+    UserDBManager userManager;
 
     public TeaFragment() {
         // Required empty public constructor
@@ -76,7 +79,8 @@ public class TeaFragment extends Fragment{
         sendRequest(url);
         settingItemClick();
 
-        manager = new CartDBManager(getContext());
+        cartManager = new CartDBManager(getContext());
+        userManager = new UserDBManager(getContext());
 
         return view;
     }
@@ -181,6 +185,7 @@ public class TeaFragment extends Fragment{
         v.findViewById(R.id.countAdd).setOnClickListener(myListener);
         v.findViewById(R.id.countDelete).setOnClickListener(myListener);
         v.findViewById(R.id.cartAdd).setOnClickListener(myListener);
+        v.findViewById(R.id.btnOrder).setOnClickListener(myListener);
 
         String[] sizeType = {"TALL", "GRANDE", "VENTI"};
         tallPrice = Integer.parseInt(priceStr);
@@ -228,6 +233,9 @@ public class TeaFragment extends Fragment{
             Button redButton = (Button) seletedItem.findViewById(R.id.coffeeHOT);
             Button blueButton = (Button) seletedItem.findViewById(R.id.coffeeICED);
             int count = Integer.parseInt(countText.getText().toString());
+            String temperature = "HOT";
+            int totalPrice = 0;
+
             switch (view.getId()) {
                 case R.id.countAdd:
                     count++; // 개수 증가
@@ -253,18 +261,15 @@ public class TeaFragment extends Fragment{
                     redButton.setSelected(false);
                     redButton.setTextColor(Color.BLACK);
                     break;
-
                 case R.id.cartAdd :
-                    String temperature = "HOT";
-                    if(seletedItem.findViewById(R.id.coffeeHOT).isSelected()) {
+                    if(redButton.isSelected()) {
                         temperature = "HOT";
                     } else {
                         temperature = "ICED";
                     }
-                    int totalPrice = 0;
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
                     //담기 sqlite insert문 실행
-                    if(manager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
+                    if(cartManager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
                             ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString(), temperature)) {
                         //sql 쿼리 실행 후 안내
                         Toast toast = Toast.makeText(getContext(),
@@ -278,6 +283,21 @@ public class TeaFragment extends Fragment{
                         //장바구니 메뉴 개수 표시 끝
                     }
                     break;
+                case R.id.btnOrder :
+                    if(redButton.isSelected()) {
+                        temperature = "HOT";
+                    } else {
+                        temperature = "ICED";
+                    }
+                    totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
+
+                    String JSONString = "{ \"userId\" : \"" + userManager.selectUserId() + "\", \"coffees\" : [ ";
+                    JSONString += "{\"keyName\" : \"" + keyName + "\", \"count\" : " + ((TextView) seletedItem.findViewById(R.id.countText)).getText();
+                    JSONString += ", \"size\" : \"" + ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString();
+                    JSONString += "\", \"temperature\" : \"" + temperature + "\", \"totalPrice\" : " + totalPrice + "}";
+                    JSONString += " ] }";
+                    orderRequest(JSONString);
+                    break;
             }
         }
     };
@@ -288,6 +308,53 @@ public class TeaFragment extends Fragment{
      */
     public void onClickIncrementCartCount(int count) {
         ((OrderActivity)getActivity()).setBadgeCount(getContext(), ((OrderActivity)getActivity()).mCartMenuIcon, String.valueOf(count));
+    }
+
+    /**
+     * 서버 통신 후 주문
+     */
+    private void orderRequest(String JSONString) {
+        String url = getString(R.string.server_url) + "/orders";
+        JSONObject json = null;
+        try {
+            json = new JSONObject(JSONString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest socRequest = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                alert_confirm.setMessage("주문이 신청되었습니다.").setCancelable(false).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getActivity().finish(); //이전 화면으로 넘기기
+                            }
+                        });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("error!!", error);
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+                alert_confirm.setMessage("주문이 실패했습니다. 다시 주문해주세요.").setCancelable(false).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return; // 확인 후 제자리에 멈추기
+                            }
+                        });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        requestQueue.add(socRequest);
     }
 
 }
