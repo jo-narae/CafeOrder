@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="60dp"
-    tools:context="com.narae.cafeorder.fragments.BestFragment">
+    tools:context="com.narae.cafeorder.activity.BestActivity">
 
     <ListView
         android:layout_width="match_parent"

@@ -17,8 +17,6 @@ import android.widget.ListView;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.best.BestMenuListViewAdapter;
 import com.narae.cafeorder.best.BestMenuListViewItem;
-import com.narae.cafeorder.menu.MenuListViewAdapter;
-import com.narae.cafeorder.menu.MenuListViewItem;
 
 public class BestActivity extends AppCompatActivity {
 
@@ -50,39 +48,22 @@ public class BestActivity extends AppCompatActivity {
         listview.setAdapter(adapter);
 
         // 첫 번째 아이템 추가.
-        adapter.addItem(1, ContextCompat.getDrawable(this, R.drawable.americano),
-                "Box", "30") ;
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank1), ContextCompat.getDrawable(this, R.drawable.americano),
+                "아메리카노", "300건") ;
         // 두 번째 아이템 추가.
-        adapter.addItem(2, ContextCompat.getDrawable(this, R.drawable.americano),
-                "Circle", "15") ;
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank2), ContextCompat.getDrawable(this, R.drawable.americano),
+                "카푸치노", "200건") ;
         // 세 번째 아이템 추가.
-        adapter.addItem(3, ContextCompat.getDrawable(this, R.drawable.americano),
-                "Ind", "20") ;
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank3), ContextCompat.getDrawable(this, R.drawable.americano),
+                "얼 그레이 티", "100건") ;
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                BestMenuListViewItem item = (BestMenuListViewItem) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle() ;
-                String descStr = item.getSellCount() ;
-                Drawable iconDrawable = item.getIcon();
+        // 네 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank4), ContextCompat.getDrawable(this, R.drawable.americano),
+                "카페 라떼", "70건") ;
+        // 다섯 번째 아이템 추가.
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank5), ContextCompat.getDrawable(this, R.drawable.americano),
+                "카페 모카", "20건") ;
 
-                if(seletedItem!=null) {
-                    seletedItem.findViewById(R.id.hiddenCount).setVisibility(View.GONE);
-                    seletedItem.findViewById(R.id.hiddenMenuLayout).setVisibility(View.GONE);
-                }
-
-                if(seletedItem!=v) {
-                    seletedItem = v;
-                    v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
-                    v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
-                } else {
-                    seletedItem = null;
-                }
-                // TODO : use item data.
-            }
-        }) ;
     }
 
 

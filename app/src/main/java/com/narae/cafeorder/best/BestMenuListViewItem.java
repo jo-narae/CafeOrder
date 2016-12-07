@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 public class BestMenuListViewItem {
 
     private String id;
-    private int rank;
+    private Drawable rank;
     private Drawable icon;
     private String title;
     private String sellCount ;
@@ -22,11 +22,11 @@ public class BestMenuListViewItem {
         this.id = id;
     }
 
-    public int getRank() {
+    public Drawable getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(Drawable rank) {
         this.rank = rank;
     }
 
