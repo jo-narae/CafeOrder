@@ -14,13 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.database.CartDBManager;
+import com.narae.cafeorder.database.DBManager;
 import com.narae.cafeorder.fragments.CurrentFragment;
 import com.narae.cafeorder.fragments.HistoryFragment;
 
@@ -33,7 +32,7 @@ public class HistoryActivity extends AppCompatActivity {
     private LayerDrawable mCartMenuIcon;
     private int mCartCount;
 
-    CartDBManager manager;
+    DBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class HistoryActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        manager = new CartDBManager(this);
+        manager = new DBManager(this);
         mCartCount = manager.cartTotalCount();
     }
 

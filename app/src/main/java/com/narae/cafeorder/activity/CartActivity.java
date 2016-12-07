@@ -22,8 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.cart.CartMenuListViewAdapter;
 import com.narae.cafeorder.cart.CartMenuListViewItem;
-import com.narae.cafeorder.database.CartDBManager;
-import com.narae.cafeorder.database.UserDBManager;
+import com.narae.cafeorder.database.DBManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +35,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button btnOrder;
 
-    CartDBManager cartManager;
-    UserDBManager userManager;
+    DBManager manager;
 
     String JSONString = "";
 
@@ -53,8 +51,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        cartManager = new CartDBManager(this);
-        userManager = new UserDBManager(this);
+        manager = new DBManager(this);
 
         final ListView listview ;
         CartMenuListViewAdapter adapter;
@@ -66,15 +63,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         listview = (ListView) findViewById(R.id.lv_cart);
         listview.setAdapter(adapter);
 
-        List<CartMenuListViewItem> list = cartManager.selectCartList(this);
+        List<CartMenuListViewItem> list = manager.selectCartList(this);
 
         adapter.setItem(list);
 
-        if(cartManager.cartTotalCount()>0) {
+        if(manager.cartTotalCount()>0) {
             TextView totalCountText = (TextView) findViewById(R.id.totalCount);
             TextView totalPriceText = (TextView) findViewById(R.id.totalPrice);
-            totalCountText.setText(cartManager.cartTotalCount() + "건");
-            totalPriceText.setText(cartManager.cartTotalPrice() + "원");
+            totalCountText.setText(manager.cartTotalCount() + "건");
+            totalPriceText.setText(manager.cartTotalPrice() + "원");
             findViewById(R.id.noItemResult).setVisibility(View.GONE);
             listview.setVisibility(View.VISIBLE);
             findViewById(R.id.totalResult).setVisibility(View.VISIBLE);
@@ -102,9 +99,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnOrder:
                 //로직
-                List<CartMenuListViewItem> list = cartManager.selectCartList(this);
-                int listCount = cartManager.cartTotalCount();
-                String userId = userManager.selectUserId();
+                List<CartMenuListViewItem> list = manager.selectCartList(this);
+                int listCount = manager.cartTotalCount();
+                String userId = manager.selectUserId();
 
                 JSONString += "{ \"userId\" : \"" + userId + "\", \"coffees\" : [ ";
 
@@ -148,7 +145,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                cartManager.allDeleteCartList(); //장바구니 리스트 삭제
+                                manager.allDeleteCartList(); //장바구니 리스트 삭제
                                 finish(); //이전 화면으로 넘기기
                             }
                         });

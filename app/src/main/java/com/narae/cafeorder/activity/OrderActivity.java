@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.database.CartDBManager;
+import com.narae.cafeorder.database.DBManager;
 import com.narae.cafeorder.fragments.EspressoFragment;
 import com.narae.cafeorder.fragments.TeaFragment;
 import com.narae.cafeorder.fragments.FrappuccinoFragment;
@@ -33,7 +33,7 @@ public class OrderActivity extends AppCompatActivity {
     public LayerDrawable mCartMenuIcon;
     public int mCartCount;
 
-    CartDBManager manager;
+    DBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class OrderActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        manager = new CartDBManager(this);
+        manager = new DBManager(this);
 
         mCartCount = manager.cartTotalCount();
     }

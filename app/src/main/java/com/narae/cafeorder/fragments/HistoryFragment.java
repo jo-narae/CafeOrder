@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.adapter.HistoryListAdapter;
+import com.narae.cafeorder.database.DBManager;
 import com.narae.cafeorder.history.History;
 import com.narae.cafeorder.history.HistoryItem;
 
@@ -39,6 +40,8 @@ public class HistoryFragment extends Fragment{
 
     View currentView;
 
+    DBManager manager;
+
     public HistoryFragment() {
         // Required empty public constructor
     }
@@ -53,6 +56,8 @@ public class HistoryFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         currentView = inflater.inflate(R.layout.fragment_history, container, false);
+
+        manager = new DBManager(getContext());
 
         historyList = new ArrayList<>();
 
@@ -73,7 +78,8 @@ public class HistoryFragment extends Fragment{
      * 서버 통신 후 리스트 조회
      */
     private void orderRequest() {
-        String url = getString(R.string.server_url) + "/orders/search_history?userId=test";
+        String userId = manager.selectUserId();
+        String url = getString(R.string.server_url) + "/orders/search_history?userId=" + userId;
         Log.d("url", url);
         JsonArrayRequest socRequest = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override

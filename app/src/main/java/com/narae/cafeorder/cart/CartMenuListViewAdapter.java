@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.activity.CartActivity;
-import com.narae.cafeorder.database.CartDBManager;
+import com.narae.cafeorder.database.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CartMenuListViewAdapter extends BaseAdapter {
 
-    CartDBManager manager;
+    DBManager manager;
     Activity cartViewActivity;
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -80,7 +80,7 @@ public class CartMenuListViewAdapter extends BaseAdapter {
         btnMinus.setOnClickListener(new ButtonClickListener(pos));
         btnDelete.setOnClickListener(new ButtonClickListener(pos));
 
-        manager = new CartDBManager(context);
+        manager = new DBManager(context);
 
         return convertView;
     }

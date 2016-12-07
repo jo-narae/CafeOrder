@@ -18,7 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.adapter.CurrentListAdapter;
-import com.narae.cafeorder.database.UserDBManager;
+import com.narae.cafeorder.database.DBManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +29,7 @@ public class CurrentFragment extends Fragment{
 
     CurrentListAdapter adapter ;
     View currentView;
-    UserDBManager manager;
+    DBManager manager;
 
     public CurrentFragment() {
         // Required empty public constructor
@@ -46,7 +46,7 @@ public class CurrentFragment extends Fragment{
         // Inflate the layout for this fragment
         currentView = inflater.inflate(R.layout.fragment_current, container, false);
 
-        manager = new UserDBManager(getContext());
+        manager = new DBManager(getContext());
 
         // Adapter 생성 및 Adapter 지정.
         adapter = new CurrentListAdapter() ;

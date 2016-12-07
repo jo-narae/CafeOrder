@@ -28,8 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.activity.OrderActivity;
-import com.narae.cafeorder.database.CartDBManager;
-import com.narae.cafeorder.database.UserDBManager;
+import com.narae.cafeorder.database.DBManager;
 import com.narae.cafeorder.menu.MenuListViewAdapter;
 import com.narae.cafeorder.menu.MenuListViewItem;
 
@@ -52,8 +51,7 @@ public class EspressoFragment extends Fragment{
 
     int tallPrice;
 
-    CartDBManager cartManager;
-    UserDBManager userManager;
+    DBManager manager;
 
     public EspressoFragment() {
         // Required empty public constructor
@@ -79,8 +77,7 @@ public class EspressoFragment extends Fragment{
         sendRequest(url);
         settingItemClick();
 
-        cartManager = new CartDBManager(getContext());
-        userManager = new UserDBManager(getContext());
+        manager = new DBManager(getContext());
 
         return view;
     }
@@ -269,7 +266,7 @@ public class EspressoFragment extends Fragment{
                     }
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
                     //담기 sqlite insert문 실행
-                    if(cartManager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
+                    if(manager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
                             ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString(), temperature)) {
                         //sql 쿼리 실행 후 안내
                         Toast toast = Toast.makeText(getContext(),
@@ -291,7 +288,7 @@ public class EspressoFragment extends Fragment{
                     }
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
 
-                    String JSONString = "{ \"userId\" : \"" + userManager.selectUserId() + "\", \"coffees\" : [ ";
+                    String JSONString = "{ \"userId\" : \"" + manager.selectUserId() + "\", \"coffees\" : [ ";
                     JSONString += "{\"keyName\" : \"" + keyName + "\", \"count\" : " + ((TextView) seletedItem.findViewById(R.id.countText)).getText();
                     JSONString += ", \"size\" : \"" + ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString();
                     JSONString += "\", \"temperature\" : \"" + temperature + "\", \"totalPrice\" : " + totalPrice + "}";

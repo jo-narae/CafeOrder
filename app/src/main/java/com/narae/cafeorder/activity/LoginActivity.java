@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.database.UserDBManager;
+import com.narae.cafeorder.database.DBManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView user_id;
     private TextView user_password;
 
-    UserDBManager manager;
+    DBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user_id = (TextView) findViewById(R.id.user_id);
         user_password = (TextView) findViewById(R.id.user_password);
 
-        manager = new UserDBManager(this);
+        manager = new DBManager(this);
 
         userCheck(); //디바이스 내 회원 정보가 있는지 체크
 

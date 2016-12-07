@@ -17,7 +17,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
-import com.narae.cafeorder.database.UserDBManager;
+import com.narae.cafeorder.database.DBManager;
 
 import org.json.JSONObject;
 
@@ -33,7 +33,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private TextView user_password;
     private TextView password_check;
 
-    UserDBManager manager;
+    DBManager manager;
 
     private String input_user_id;
     private boolean idValidationFlag = false;
@@ -50,7 +50,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         user_password = (TextView) findViewById(R.id.user_password);
         password_check = (TextView) findViewById(R.id.password_check);
 
-        manager = new UserDBManager(this);
+        manager = new DBManager(this);
         //userCheck(); //디바이스 내 회원 정보가 있는지 체크
 
         buttonIntro.setOnClickListener(this);
