@@ -51,7 +51,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         password_check = (TextView) findViewById(R.id.password_check);
 
         manager = new DBManager(this);
-        //userCheck(); //디바이스 내 회원 정보가 있는지 체크
+        userCheck(); //디바이스 내 회원 정보가 있는지 체크
 
         buttonIntro.setOnClickListener(this);
         buttonidcheck.setOnClickListener(this);

@@ -96,13 +96,14 @@ public class CurrentFragment extends Fragment{
 
                 totalCountText.setText(totalCount + "건");
                 totalPriceText.setText(totalPrice + "원");
+
+                currentView.findViewById(R.id.currentResult).setVisibility(View.VISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // 리스트가 없을 경우 이 로직 실행함
                 VolleyLog.d("error", error);
-                currentView.findViewById(R.id.currentResult).setVisibility(View.GONE);
                 currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
             }
         });

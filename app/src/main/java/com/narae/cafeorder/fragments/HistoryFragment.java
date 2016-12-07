@@ -2,7 +2,6 @@ package com.narae.cafeorder.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.adapter.HistoryListAdapter;
@@ -25,10 +23,8 @@ import com.narae.cafeorder.history.HistoryItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -84,7 +80,7 @@ public class HistoryFragment extends Fragment{
         JsonArrayRequest socRequest = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                // 아이디가 있을 경우 이 로직 실행함
+                // 리스트가 있을 경우 이 로직 실행함
                 for(int i=0; response.length() > i; i++) {
                     try {
                         String orderStatus = "";
@@ -125,14 +121,18 @@ public class HistoryFragment extends Fragment{
                         e.printStackTrace();
                     }
                 }
+                if(response.length() == 0) { //리스트가 없을 경우 이 로직을 실행함
+                    currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
+                    currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // 아이디가 없을 경우 이 로직 실행함
+                // 리스트가 없을 경우 이 로직 실행함
                 VolleyLog.d("error", error);
-                //currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
-                //currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
+                currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
+                currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
             }
         });
 
