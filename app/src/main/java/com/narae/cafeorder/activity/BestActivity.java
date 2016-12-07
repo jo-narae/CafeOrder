@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.narae.cafeorder.R;
 import com.narae.cafeorder.best.BestMenuListViewAdapter;
 import com.narae.cafeorder.best.BestMenuListViewItem;
+import com.narae.cafeorder.database.DBManager;
 
 public class BestActivity extends AppCompatActivity {
 
@@ -25,6 +26,8 @@ public class BestActivity extends AppCompatActivity {
 
     private LayerDrawable mCartMenuIcon;
     private int mCartCount;
+
+    DBManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,19 @@ public class BestActivity extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.rank5), ContextCompat.getDrawable(this, R.drawable.americano),
                 "카페 모카", "20건") ;
 
+        manager = new DBManager(this);
+        mCartCount = manager.cartTotalCount();
+
+    }
+
+    /**
+     * 뒤로 가기시 재실행
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mCartCount = manager.cartTotalCount();
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount));
     }
 
 
@@ -72,7 +88,7 @@ public class BestActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         mCartMenuIcon = (LayerDrawable) menu.findItem(R.id.action_cart).getIcon();
-        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
+        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,9 +117,5 @@ public class BestActivity extends AppCompatActivity {
         badge.setCount(count);
         icon.mutate();
         icon.setDrawableByLayerId(R.id.ic_badge, badge);
-    }
-
-    public void onClickIncrementCartCount(View view) {
-        setBadgeCount(this, mCartMenuIcon, String.valueOf(mCartCount++));
     }
 }
