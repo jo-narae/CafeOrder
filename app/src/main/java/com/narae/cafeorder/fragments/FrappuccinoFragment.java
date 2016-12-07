@@ -1,7 +1,6 @@
 package com.narae.cafeorder.fragments;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -166,7 +165,6 @@ public class FrappuccinoFragment extends Fragment{
         //해당 아이템 초기화
         TextView countText = (TextView)v.findViewById(R.id.countText);
         countText.setText("1");
-        v.findViewById(R.id.coffeeICED).setSelected(false);
         TextView priceText = (TextView) v.findViewById(R.id.priceText);
         priceText.setText(String.valueOf(tallPrice) + "원");
     }
@@ -176,12 +174,11 @@ public class FrappuccinoFragment extends Fragment{
      */
     private void selectItemInit(View v) {
         Button redButton = (Button) seletedItem.findViewById(R.id.coffeeHOT);
+        Button blueButton = (Button) seletedItem.findViewById(R.id.coffeeICED);
+        redButton.setVisibility(View.GONE); //프라푸치노는 기본적으로 아이스이기 때문에 버튼을 비활성화 한다
+        blueButton.setVisibility(View.GONE); //프라푸치노는 기본적으로 아이스이기 때문에 버튼을 비활성화 한다
         v.findViewById(R.id.hiddenCount).setVisibility(View.VISIBLE);
         v.findViewById(R.id.hiddenMenuLayout).setVisibility(View.VISIBLE);
-        redButton.setSelected(true);
-        redButton.setTextColor(Color.WHITE);
-        v.findViewById(R.id.coffeeHOT).setOnClickListener(myListener);
-        v.findViewById(R.id.coffeeICED).setOnClickListener(myListener);
         v.findViewById(R.id.countAdd).setOnClickListener(myListener);
         v.findViewById(R.id.countDelete).setOnClickListener(myListener);
         v.findViewById(R.id.cartAdd).setOnClickListener(myListener);
@@ -230,10 +227,7 @@ public class FrappuccinoFragment extends Fragment{
         public void onClick(View view) {
             TextView countText = (TextView)seletedItem.findViewById(R.id.countText);
             TextView priceText = (TextView)seletedItem.findViewById(R.id.priceText);
-            Button redButton = (Button) seletedItem.findViewById(R.id.coffeeHOT);
-            Button blueButton = (Button) seletedItem.findViewById(R.id.coffeeICED);
             int count = Integer.parseInt(countText.getText().toString());
-            String temperature = "HOT";
             int totalPrice = 0;
 
             switch (view.getId()) {
@@ -249,28 +243,11 @@ public class FrappuccinoFragment extends Fragment{
                     countText.setText(String.valueOf(count));
                     priceText.setText(String.valueOf(Integer.parseInt(priceStr)*count)+"원");
                     break;
-                case R.id.coffeeHOT:
-                    redButton.setSelected(true);
-                    redButton.setTextColor(Color.WHITE);
-                    blueButton.setSelected(false);
-                    blueButton.setTextColor(Color.BLACK);
-                    break;
-                case R.id.coffeeICED :
-                    blueButton.setSelected(true);
-                    blueButton.setTextColor(Color.WHITE);
-                    redButton.setSelected(false);
-                    redButton.setTextColor(Color.BLACK);
-                    break;
                 case R.id.cartAdd :
-                    if(redButton.isSelected()) {
-                        temperature = "HOT";
-                    } else {
-                        temperature = "ICED";
-                    }
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
                     //담기 sqlite insert문 실행
                     if(cartManager.insertCartList(keyName, engName, korName, ((TextView) seletedItem.findViewById(R.id.countText)).getText().toString(), String.valueOf(totalPrice),
-                            ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString(), temperature)) {
+                            ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString(), "ICED")) {
                         //sql 쿼리 실행 후 안내
                         Toast toast = Toast.makeText(getContext(),
                                 "선택한 상품을 장바구니에 담았습니다.", Toast.LENGTH_SHORT);
@@ -284,17 +261,12 @@ public class FrappuccinoFragment extends Fragment{
                     }
                     break;
                 case R.id.btnOrder :
-                    if(redButton.isSelected()) {
-                        temperature = "HOT";
-                    } else {
-                        temperature = "ICED";
-                    }
                     totalPrice = Integer.parseInt(priceStr) * Integer.parseInt(((TextView) seletedItem.findViewById(R.id.countText)).getText().toString());
 
                     String JSONString = "{ \"userId\" : \"" + userManager.selectUserId() + "\", \"coffees\" : [ ";
                     JSONString += "{\"keyName\" : \"" + keyName + "\", \"count\" : " + ((TextView) seletedItem.findViewById(R.id.countText)).getText();
                     JSONString += ", \"size\" : \"" + ((Spinner) seletedItem.findViewById(R.id.spinnerSize)).getSelectedItem().toString();
-                    JSONString += "\", \"temperature\" : \"" + temperature + "\", \"totalPrice\" : " + totalPrice + "}";
+                    JSONString += "\", \"temperature\" : \"ICED\", \"totalPrice\" : " + totalPrice + "}";
                     JSONString += " ] }";
                     orderRequest(JSONString);
                     break;
