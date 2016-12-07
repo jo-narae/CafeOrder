@@ -11,13 +11,12 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_marginLeft="35dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="20dp">
 
                 <ImageView
-                    android:id="@+id/custom_list_image"
+                    android:id="@+id/HeaderImg"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/americano" >
+                    android:layout_height="wrap_content" >
                 </ImageView>
         </LinearLayout>
 

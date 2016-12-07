@@ -11,28 +11,24 @@
         <TextView
             android:id="@+id/lblMenuName"
             android:layout_height="wrap_content"
-            android:textSize="17dip"
+            android:textSize="20dip"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
             android:text="아메리카노"
             android:layout_width="250dp" />
-        <TextView
-            android:id="@+id/lblCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17dip"
-            android:text="1건"/>
 
     </LinearLayout>
     <TextView
         android:id="@+id/lblPrice"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
+        android:textSize="16dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:text="3000원"/>
+        android:text="TALL/HOT/1건/6100원"/>
 
 </LinearLayout>

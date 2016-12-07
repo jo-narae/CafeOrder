@@ -1,6 +1,7 @@
 package com.narae.cafeorder.history;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class History {
 
     private String id;
-    private Drawable icon;
+    private int icon;
     private String title;
     private String subtitle;
     private List<HistoryItem> historyItems;
@@ -20,7 +21,7 @@ public class History {
     public History() {
     }
 
-    public History(String id, Drawable icon, String title, String subtitle) {
+    public History(String id, int icon, String title, String subtitle) {
         this.id = id;
         this.icon = icon;
         this.title = title;
@@ -33,11 +34,11 @@ public class History {
     public void setId(String id) {
         this.id = id;
     }
-    public Drawable getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 

@@ -3,6 +3,7 @@ package com.narae.cafeorder.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.narae.cafeorder.R;
@@ -20,6 +22,8 @@ import com.narae.cafeorder.adapter.HistoryListAdapter;
 import com.narae.cafeorder.history.History;
 import com.narae.cafeorder.history.HistoryItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -55,8 +59,8 @@ public class HistoryFragment extends Fragment{
         // get the listview
         expListView = (ExpandableListView) currentView.findViewById(R.id.hisExp);
 
-        //prepareListDateNew();
         orderRequest();
+
         listAdapter = new HistoryListAdapter(getContext(), historyList);
 
         // setting list adapter
@@ -65,42 +69,65 @@ public class HistoryFragment extends Fragment{
         return currentView;
     }
 
-    /*
-     * Preparing the list data
-     */
-    private  void prepareListDateNew(){
-        historyList.add(new History("0", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "아메리카노 외 1건"));
-        historyList.add(new History("1", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "아메리카노"));
-        historyList.add(new History("2", ContextCompat.getDrawable(getContext(), R.drawable.americano), "주문완료", "카페라떼 외 1건"));
-
-        historyList.get(0).addHistoryItem(new HistoryItem("아메리카노", "3", "3000"));
-        historyList.get(0).addHistoryItem(new HistoryItem("카페라떼", "2", "3000"));
-
-        historyList.get(1).addHistoryItem(new HistoryItem("아메리카노", "2", "3000"));
-        historyList.get(1).addHistoryItem(new HistoryItem("카페라떼", "2", "3000"));
-
-        historyList.get(2).addHistoryItem(new HistoryItem("아메리카노", "1", "3000"));
-        historyList.get(2).addHistoryItem(new HistoryItem("카페라떼", "1", "3000"));
-
-    }
-
     /**
      * 서버 통신 후 리스트 조회
      */
     private void orderRequest() {
         String url = getString(R.string.server_url) + "/orders/search_history?userId=test";
-        JsonObjectRequest socRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+        Log.d("url", url);
+        JsonArrayRequest socRequest = new JsonArrayRequest(Request.Method.GET, url, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 // 아이디가 있을 경우 이 로직 실행함
+                for(int i=0; response.length() > i; i++) {
+                    try {
+                        String orderStatus = "";
+                        if(response.getJSONObject(i).getString("orderStatus").equals("ORDER")) {
+                            orderStatus = "주문 신청";
+                        }
+                        if(response.getJSONObject(i).getString("orderStatus").equals("ACCEPT")) {
+                            orderStatus = "주문 승인";
+                        }
+                        if(response.getJSONObject(i).getString("orderStatus").equals("MAKING")) {
+                            orderStatus = "음료 제조";
+                        }
+                        if(response.getJSONObject(i).getString("orderStatus").equals("COMPLETE")) {
+                            orderStatus = "주문 완료";
+                        }
+                        JSONArray jsonArray = null;
+                        jsonArray = response.getJSONObject(i).getJSONArray("coffees");
+
+                        String uri = "@drawable/" + jsonArray.getJSONObject(0).getString("keyName");
+                        String packName = getContext().getPackageName(); // 패키지명
+                        int imageResource = getResources().getIdentifier(uri, null, packName);
+
+                        String detailString = jsonArray.getJSONObject(0).getString("keyName"); //"아메리카노 외 1건"
+                        if(jsonArray.length() > 1) {
+                            int count = jsonArray.length();
+                            count = count - 1;
+                            detailString += " 외 " + count + "건";
+                        }
+
+                        historyList.add(new History(String.valueOf(i), imageResource, orderStatus, detailString));
+
+                        for(int j=0; jsonArray.length() > j; j++) {
+                            String korName = jsonArray.getJSONObject(j).getString("keyName");
+                            String totalPrice = jsonArray.getJSONObject(j).getString("totalPrice");
+                            String itemDetailString = jsonArray.getJSONObject(j).getString("size") + "/" + jsonArray.getJSONObject(j).getString("temperature") + "/" + jsonArray.getJSONObject(j).getString("count") + "건/" + jsonArray.getJSONObject(j).getString("totalPrice") + "원";
+                            historyList.get(i).addHistoryItem(new HistoryItem(korName, itemDetailString));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // 아이디가 없을 경우 이 로직 실행함
                 VolleyLog.d("error", error);
-                currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
-                currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
+                //currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
+                //currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
             }
         });
 

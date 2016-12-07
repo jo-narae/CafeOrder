@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.narae.cafeorder.R;
@@ -41,25 +42,15 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
         final HistoryItem child = (HistoryItem) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.history_item, null);
         }
 
-        TextView lblMenuName = (TextView) convertView
-                .findViewById(R.id.lblMenuName);
-
+        TextView lblMenuName = (TextView) convertView.findViewById(R.id.lblMenuName);
         lblMenuName.setText(child.getMenuname());
 
-        TextView lblCount = (TextView) convertView
-                .findViewById(R.id.lblCount);
-
-        lblCount.setText(child.getCount()+"건");
-
-        TextView lblPrice = (TextView) convertView
-                .findViewById(R.id.lblPrice);
-
-        lblPrice.setText(child.getPrice()+"원");
+        TextView lblPrice = (TextView) convertView.findViewById(R.id.lblPrice);
+        lblPrice.setText(child.getDetail());
 
         return convertView;
     }
@@ -91,18 +82,18 @@ public class HistoryListAdapter extends BaseExpandableListAdapter {
         History history = (History) getGroup(groupPosition);
         //String headerTitleSub = (String) getGroupSub(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.history_group, null);
         }
 
-        TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
+        ImageView titleImg = (ImageView) convertView.findViewById(R.id.HeaderImg);
+        titleImg.setImageResource(history.getIcon());
+
+        TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(history.getTitle());
 
-        TextView lblListSub = (TextView) convertView
-                .findViewById(R.id.lblListHeaderSub);
+        TextView lblListSub = (TextView) convertView.findViewById(R.id.lblListHeaderSub);
         lblListSub.setText(history.getSubtitle());
 
         return convertView;

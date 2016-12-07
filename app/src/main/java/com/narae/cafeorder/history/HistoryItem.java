@@ -7,15 +7,14 @@ package com.narae.cafeorder.history;
 public class HistoryItem {
     private String menuname;
     private String count;
-    private String price;
+    private String detail;
 
     public HistoryItem() {
     }
 
-    public HistoryItem(String menuname, String count, String price) {
+    public HistoryItem(String menuname, String detail) {
         this.menuname = menuname;
-        this.count = count;
-        this.price = price;
+        this.detail = detail;
     }
 
     public String getMenuname() {
@@ -34,11 +33,11 @@ public class HistoryItem {
         this.count = count;
     }
 
-    public String getPrice() {
-        return price;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
