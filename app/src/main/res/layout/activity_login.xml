@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="80dp"
+    android:paddingTop="70dp"
     tools:context="com.narae.cafeorder.activity.JoinActivity"
     android:weightSum="1">
 
@@ -22,31 +22,14 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-        <EditText
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/user_id"
-            android:hint="아이디 입력"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonidcheck"
-            android:text="중복체크"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/user_name"
-            android:hint="이름 또는 별명 입력"/>
+            android:id="@+id/user_id"
+            android:hint="아이디 입력"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,13 +37,6 @@
             android:id="@+id/user_password"
             android:inputType="textPassword"
             android:hint="비밀번호 입력"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/password_check"
-            android:inputType="textPassword"
-            android:hint="비밀번호 재입력"/>
     </LinearLayout>
 
     <Button
@@ -68,5 +44,21 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/buttonintro" />
+        android:layout_marginBottom="20dp"
+        android:id="@+id/btnLogin" />
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:text="아직도 회원이 아니신가요?"/>
+    <Button
+        android:text="가입하기"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/btnJoin" />
 </LinearLayout>

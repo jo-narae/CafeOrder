@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
+public class JoinActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonIntro;
     private Button buttonidcheck;
@@ -51,7 +51,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         password_check = (TextView) findViewById(R.id.password_check);
 
         manager = new UserDBManager(this);
-        userCheck(); //디바이스 내 회원 정보가 있는지 체크
+        //userCheck(); //디바이스 내 회원 정보가 있는지 체크
 
         buttonIntro.setOnClickListener(this);
         buttonidcheck.setOnClickListener(this);
@@ -77,7 +77,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
      */
     private void userCheck() {
         if(manager.selectUserInfo()) {
-            startActivity(new Intent(IntroActivity.this, MainActivity.class));
+            startActivity(new Intent(JoinActivity.this, MainActivity.class));
         }
     }
 

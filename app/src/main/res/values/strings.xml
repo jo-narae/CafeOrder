@@ -12,7 +12,8 @@
 
     <string name="title_activity_order">Cafe Menu</string>
     <string name="title_activity_history">Order History</string>
-    <string name="title_activity_recipe">My Recipe</string>
+    <string name="title_activity_login">User Login</string>
+    <string name="title_activity_join">User Join</string>
     <string name="title_activity_best">Best 5</string>
     <string name="title_activity_cart">Order Cart</string>
 

@@ -14,7 +14,7 @@ import com.narae.cafeorder.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    private Button btnOrder, btnHistory, btnRecipe, btnBest;
+    private Button btnOrder, btnHistory, btnBest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +25,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnOrder = (Button) findViewById(R.id.btnOrder);
         btnHistory = (Button) findViewById(R.id.btnHistory);
-        //btnRecipe = (Button) findViewById(R.id.btnRecipe);
         btnBest = (Button) findViewById(R.id.btnBest);
 
         btnOrder.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
-        //btnRecipe.setOnClickListener(this);
         btnBest.setOnClickListener(this);
 
     }
@@ -44,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnHistory:
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
-            //case R.id.btnRecipe:
-            //    startActivity(new Intent(MainActivity.this, RecipeActivity.class));
-            //    break;
             case R.id.btnBest:
                 startActivity(new Intent(MainActivity.this, BestActivity.class));
                 break;
