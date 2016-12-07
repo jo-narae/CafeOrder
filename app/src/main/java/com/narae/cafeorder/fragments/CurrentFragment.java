@@ -83,10 +83,10 @@ public class CurrentFragment extends Fragment{
                     JSONObject coffee = null;
                     try {
                         coffee = jsonArray.getJSONObject(i);
-                        String keyName = coffee.getString("keyName");
+                        String korName = coffee.getString("korName");
                         String detailString = coffee.getString("size") + "/" + coffee.getString("temperature") + "/" + coffee.getString("count") + "건/" + coffee.getString("totalPrice") + "원";
                         totalPrice = totalPrice + coffee.getInt("totalPrice");
-                        adapter.addItem(keyName, detailString) ;
+                        adapter.addItem(korName, detailString) ;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

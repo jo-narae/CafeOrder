@@ -107,7 +107,7 @@ public class HistoryFragment extends Fragment{
                         String packName = getContext().getPackageName(); // 패키지명
                         int imageResource = getResources().getIdentifier(uri, null, packName);
 
-                        String detailString = jsonArray.getJSONObject(0).getString("keyName"); //"아메리카노 외 1건"
+                        String detailString = jsonArray.getJSONObject(0).getString("korName"); //"아메리카노 외 1건"
                         if(jsonArray.length() > 1) {
                             int count = jsonArray.length();
                             count = count - 1;
@@ -117,8 +117,7 @@ public class HistoryFragment extends Fragment{
                         historyList.add(new History(String.valueOf(i), imageResource, orderStatus, detailString));
 
                         for(int j=0; jsonArray.length() > j; j++) {
-                            String korName = jsonArray.getJSONObject(j).getString("keyName");
-                            String totalPrice = jsonArray.getJSONObject(j).getString("totalPrice");
+                            String korName = jsonArray.getJSONObject(j).getString("korName");
                             String itemDetailString = jsonArray.getJSONObject(j).getString("size") + "/" + jsonArray.getJSONObject(j).getString("temperature") + "/" + jsonArray.getJSONObject(j).getString("count") + "건/" + jsonArray.getJSONObject(j).getString("totalPrice") + "원";
                             historyList.get(i).addHistoryItem(new HistoryItem(korName, itemDetailString));
                         }
