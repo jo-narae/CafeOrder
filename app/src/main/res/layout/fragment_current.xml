@@ -29,7 +29,7 @@
                     android:id="@+id/startbullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/startvisible" />
+                    android:src="@drawable/startgone" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
             android:textSize="18dp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="현재 주문현황을 불러올 수 없습니다." />
+            android:text="주문현황을 불러올 수 없습니다." />
     </LinearLayout>
 
 </LinearLayout>

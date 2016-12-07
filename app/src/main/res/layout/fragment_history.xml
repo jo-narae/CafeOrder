@@ -9,4 +9,26 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 
+    <LinearLayout
+        android:id="@+id/noCurrentResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/nolist"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="과거내역을 불러올 수 없습니다." />
+    </LinearLayout>
+
 </RelativeLayout>
