@@ -8,7 +8,7 @@
     <string name="btn_recipe">My Recipe</string>
     <string name="btn_best">Best 5</string>
 
-    <string name="server_url">http://52.78.189.224:8080/cafeOrder</string>
+    <string name="server_url">http://cafe-order.jonarae.xyz:8080/cafeOrder</string>
 
     <string name="title_activity_order">Cafe Menu</string>
     <string name="title_activity_history">Order History</string>
