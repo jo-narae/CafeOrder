@@ -98,6 +98,7 @@ public class CurrentFragment extends Fragment{
                 totalPriceText.setText(totalPrice + "원");
 
                 currentView.findViewById(R.id.currentResult).setVisibility(View.VISIBLE);
+                adapter.notifyDataSetInvalidated(); //비동기 통신시 리스트 출력이 느리거나 안되는 경우가 있어 adapter를 notify시킴
             }
         }, new Response.ErrorListener() {
             @Override

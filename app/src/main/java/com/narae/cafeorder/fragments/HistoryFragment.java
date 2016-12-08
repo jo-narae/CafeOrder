@@ -121,6 +121,7 @@ public class HistoryFragment extends Fragment{
                         e.printStackTrace();
                     }
                 }
+                listAdapter.notifyDataSetInvalidated(); //비동기 통신시 리스트 출력이 느리거나 안되는 경우가 있어 adapter를 notify시킴
                 if(response.length() == 0) { //리스트가 없을 경우 이 로직을 실행함
                     currentView.findViewById(R.id.hisExp).setVisibility(View.GONE);
                     currentView.findViewById(R.id.noCurrentResult).setVisibility(View.VISIBLE);
