@@ -2,10 +2,6 @@ package com.narae.cafeorder.menu;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by existmaster on 2016. 11. 13..
- */
-
 public class MenuListViewItem {
     private Drawable iconDrawable ;
     private String keyName ;

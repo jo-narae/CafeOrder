@@ -17,10 +17,6 @@ import com.narae.cafeorder.database.DBManager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by existmaster on 2016. 11. 13..
- */
-
 public class CartMenuListViewAdapter extends BaseAdapter {
 
     DBManager manager;

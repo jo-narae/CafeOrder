@@ -2,10 +2,6 @@ package com.narae.cafeorder.cart;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by existmaster on 2016. 11. 13..
- */
-
 public class CartMenuListViewItem {
 
     private String seq;

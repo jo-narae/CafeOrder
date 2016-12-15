@@ -1,9 +1,5 @@
 package com.narae.cafeorder.history;
 
-/**
- * Created by 성열 on 2016-11-14.
- */
-
 public class HistoryItem {
     private String menuname;
     private String count;

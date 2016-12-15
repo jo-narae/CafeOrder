@@ -12,10 +12,6 @@ import com.narae.cafeorder.cart.CartMenuListViewItem;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 성열 on 2016-11-30.
- */
-
 public class DBManager {
 
     // DB관련 상수 선언

@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 
 import com.narae.cafeorder.R;
 
-/**
- * Created by existmaster on 2016. 11. 13..
- */
-
 public class MenuFragment extends Fragment {
 
     public MenuFragment() {

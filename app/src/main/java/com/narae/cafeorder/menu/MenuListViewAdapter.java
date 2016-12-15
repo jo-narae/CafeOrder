@@ -13,10 +13,6 @@ import com.narae.cafeorder.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by existmaster on 2016. 11. 13..
- */
-
 public class MenuListViewAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList

@@ -6,10 +6,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 성열 on 2016-11-14.
- */
-
 public class History {
 
     private String id;
